@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useEffect, useState } from "react";
 
-export function ThemeToggle() {
+export function ThemeToggle({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme();
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
@@ -21,14 +21,19 @@ export function ThemeToggle() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         {isClient ? (
-          <Button type="button" variant={"ghost"} size={"icon"}>
+          <Button
+            type="button"
+            variant={"ghost"}
+            size={"icon"}
+            className={className}
+          >
             {theme === "dark" && <Moon />}
             {theme === "light" && <Sun />}
             {theme === "system" && <Monitor />}
             <span className="sr-only">Toggle theme</span>
           </Button>
         ) : (
-          <div className="size-5" />
+          <div className="size-6" />
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

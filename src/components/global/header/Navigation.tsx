@@ -17,89 +17,123 @@ import {
 
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
+    title: "Berita Terbaru",
+    href: "/berita/berita-terbaru",
     description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, aut.",
   },
   {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
+    title: "Politik",
+    href: "/berita/politik",
     description:
-      "For sighted users to preview content available behind a link.",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, aut.",
   },
   {
-    title: "Progress",
-    href: "/docs/primitives/progress",
+    title: "Agama",
+    href: "/berita/agama",
     description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, aut.",
   },
   {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
+    title: "Lingkungan",
+    href: "/beriata/lingkungan",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, aut.",
   },
   {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
+    title: "Budaya",
+    href: "/berita/budaya",
     description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, aut.",
   },
   {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
+    title: "Sosial",
+    href: "/berita/sosial",
     description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, aut.",
   },
 ];
+
+const components2: { title: string; href: string; description: string }[] = [
+  {
+    title: "Pencapaian",
+    href: "/pencapaian",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, aut.",
+  },
+  {
+    title: "Kontak",
+    href: "/kontak",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, aut.",
+  },
+  {
+    title: "FAQ",
+    href: "/faq",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, aut.",
+  },
+];
+
+// capaian, faq
 
 export function Navigation() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+          <Link href="/" legacyBehavior passHref>
+            <NavigationMenuLink
+              className={navigationMenuTriggerStyle({
+                className:
+                  "bg-transparent hover:bg-background focus:bg-transparent data-[active]:bg-background data-[state=open]:bg-background",
+              })}
+            >
               Beranda
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Profile</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="bg-transparent hover:bg-background focus:bg-transparent data-[active]:bg-background data-[state=open]:bg-background">
+            Profile
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
                 <NavigationMenuLink asChild>
                   <Link
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
+                    href="/profile/himab"
                   >
                     {/* <Icons.logo className="h-6 w-6" /> */}
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      shadcn/ui
-                    </div>
+                    <div className="mb-2 mt-4 text-lg font-medium">Himab</div>
                     <p className="text-sm leading-tight text-muted-foreground">
-                      Beautifully designed components that you can copy and
-                      paste into your apps. Accessible. Customizable. Open
-                      Source.
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Praesentium, aut.
                     </p>
                   </Link>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/docs" title="Introduction">
-                Re-usable components built using Radix UI and Tailwind CSS.
+              <ListItem href="/profile/sejarah" title="Sejarah">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Aspernatur, quibusdam!
               </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
+              <ListItem href="/profile/visi-misi" title="Visi dan Misi">
                 How to install dependencies and structure your app.
               </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
+              <ListItem
+                href="/docs/primitives/typography"
+                title="Struktur Organisasi"
+              >
+                How to install dependencies and structure your app.
               </ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Berita</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="bg-transparent hover:bg-background focus:bg-transparent data-[active]:bg-background data-[state=open]:bg-background">
+            Berita
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {components.map((component) => (
@@ -115,10 +149,12 @@ export function Navigation() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Layanan</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="bg-transparent hover:bg-background focus:bg-transparent data-[active]:bg-background data-[state=open]:bg-background">
+            Lainya
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
+            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-1 lg:w-[500px] ">
+              {components2.map((component) => (
                 <ListItem
                   key={component.title}
                   title={component.title}
@@ -132,7 +168,12 @@ export function Navigation() {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            <NavigationMenuLink
+              className={navigationMenuTriggerStyle({
+                className:
+                  "bg-transparent hover:bg-background focus:bg-transparent data-[active]:bg-background data-[state=open]:bg-background",
+              })}
+            >
               Kontak
             </NavigationMenuLink>
           </Link>
