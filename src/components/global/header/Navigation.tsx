@@ -14,6 +14,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import Image from "next/image";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -86,7 +87,7 @@ export function Navigation() {
             <NavigationMenuLink
               className={navigationMenuTriggerStyle({
                 className:
-                  "bg-transparent hover:bg-background focus:bg-transparent data-[active]:bg-background data-[state=open]:bg-background",
+                  "bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent hover:text-primary focus:text-primary data-[active]:text-primary data-[state=open]:text-primary",
               })}
             >
               Beranda
@@ -94,7 +95,7 @@ export function Navigation() {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-transparent hover:bg-background focus:bg-transparent data-[active]:bg-background data-[state=open]:bg-background">
+          <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent hover:text-primary focus:text-primary data-[active]:text-primary data-[state=open]:text-primary">
             Profile
           </NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -105,11 +106,16 @@ export function Navigation() {
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                     href="/profile/himab"
                   >
-                    {/* <Icons.logo className="h-6 w-6" /> */}
-                    <div className="mb-2 mt-4 text-lg font-medium">Himab</div>
+                    <Image
+                      src="/img/logo.png"
+                      alt="logo himab"
+                      width={1080}
+                      height={1080}
+                      className="size-full"
+                    />
+                    <div className="mb-2 mt-4 text-lg font-medium">Tentang Himab</div>
                     <p className="text-sm leading-tight text-muted-foreground">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Praesentium, aut.
+                      Lorem ipsum dolor sit amet dolor sit ametdolor
                     </p>
                   </Link>
                 </NavigationMenuLink>
@@ -131,7 +137,7 @@ export function Navigation() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-transparent hover:bg-background focus:bg-transparent data-[active]:bg-background data-[state=open]:bg-background">
+          <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent hover:text-primary focus:text-primary data-[active]:text-primary data-[state=open]:text-primary">
             Berita
           </NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -149,7 +155,7 @@ export function Navigation() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-transparent hover:bg-background focus:bg-transparent data-[active]:bg-background data-[state=open]:bg-background">
+          <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent hover:text-primary focus:text-primary data-[active]:text-primary data-[state=open]:text-primary">
             Lainya
           </NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -171,7 +177,7 @@ export function Navigation() {
             <NavigationMenuLink
               className={navigationMenuTriggerStyle({
                 className:
-                  "bg-transparent hover:bg-background focus:bg-transparent data-[active]:bg-background data-[state=open]:bg-background",
+                  "bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent hover:text-primary focus:text-primary data-[active]:text-primary data-[state=open]:text-primary",
               })}
             >
               Kontak

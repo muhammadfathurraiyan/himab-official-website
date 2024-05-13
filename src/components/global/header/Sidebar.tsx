@@ -14,6 +14,7 @@ import { AlignRight, Instagram, Menu, SeparatorVertical } from "lucide-react";
 import Link from "next/link";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import { Separator } from "@/components/ui/separator";
+import Image from "next/image";
 
 export function Sidebar() {
   return (
@@ -26,7 +27,18 @@ export function Sidebar() {
       <SheetContent>
         <SheetHeader className="pb-4">
           <SheetTitle className="text-left uppercase leading-none">
-            Himpunan Mahasiswa <br /> Aceh Besar
+            <Link href={"/"} className="flex items-center gap-2">
+              <Image
+                src="/img/logo.png"
+                alt="logo himab"
+                width={1080}
+                height={1080}
+                className="size-12"
+              />
+              <span className="mt-1">
+                Himpunan Mahasiswa <br /> Aceh Besar
+              </span>
+            </Link>
           </SheetTitle>
         </SheetHeader>
         <nav className="grid gap-4 py-4">
@@ -75,7 +87,9 @@ export function Sidebar() {
             >
               <Instagram />
             </Link>
-            <ThemeToggle />
+            <ThemeToggle
+              className={buttonVariants({ variant: "ghost", size: "icon" })}
+            />
           </div>
         </SheetFooter>
       </SheetContent>

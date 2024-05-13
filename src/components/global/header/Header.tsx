@@ -7,42 +7,62 @@ import Whatsapp from "@/components/icon/Whatsapp";
 import { Navigation } from "./Navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { Sidebar } from "./Sidebar";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function Header() {
+  const [isScroll, setIsScroll] = useState(false);
+
+  const handleIsScroll = () => {
+    if (window !== undefined) {
+      let windowHeight = window.scrollY;
+      if (windowHeight > 1) {
+        setIsScroll(true);
+      } else {
+        setIsScroll(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleIsScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleIsScroll);
+    };
+  }, []);
   return (
-    <header className="fixed top-0 z-50 flex justify-between items-center px-12 max-lg:px-4 py-4 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <Link href={"/"}>
-        <h1 className="font-bold leading-none uppercase">
+    <header
+      className={`${
+        isScroll
+          ? // "backdrop-blur bg-background/40" : "bg-background/0"
+            "backdrop-blur bg-[hsl(222.2_84%_4.9%)] bg-opacity-40"
+          : "bg-[hsl(222.2_84%_4.9%)] bg-opacity-0"
+      } transition-colors fixed top-0 w-full z-50 flex justify-between items-center px-12 max-lg:px-4 py-4 text-[hsl(210_40%_98%)]`}
+    >
+      <Link href={"/"} className="flex items-center gap-2">
+        <Image
+          src="/img/logo.png"
+          alt="logo himab"
+          width={1080}
+          height={1080}
+          className="size-12"
+        />
+        <h1 className="font-bold leading-none uppercase mt-1">
           Himpunan Mahasiswa <br /> Aceh besar
         </h1>
       </Link>
       <div className="max-lg:hidden">
         <Navigation />
       </div>
-      <div className="flex items-center gap-1 max-lg:hidden">
-        <Link
-          href={"/"}
-          className={buttonVariants({
-            variant: "ghost",
-            size: "icon",
-            className:
-              "bg-transparent hover:bg-background data-[active]:bg-background data-[state=open]:bg-background",
-          })}
-        >
+      <div className="flex items-center gap-4 max-lg:hidden">
+        <Link href={"/"} className="hover:text-primary transition-colors">
           <Whatsapp />
         </Link>
-        <Link
-          href={"/"}
-          className={buttonVariants({
-            variant: "ghost",
-            size: "icon",
-            className:
-              "bg-transparent hover:bg-background data-[active]:bg-background data-[state=open]:bg-background",
-          })}
-        >
+        <Link href={"/"} className="hover:text-primary transition-colors">
           <Instagram />
         </Link>
-        <ThemeToggle className="bg-transparent hover:bg-background focus:bg-transparent data-[active]:bg-background data-[state=open]:bg-background" />
+        <ThemeToggle />
       </div>
       <div className="lg:hidden">
         <Sidebar />

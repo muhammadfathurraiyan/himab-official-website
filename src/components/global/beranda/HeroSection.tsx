@@ -1,55 +1,73 @@
-"use client"
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
+"use client";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectCreative, Pagination } from "swiper/modules";
+import Image from "next/image";
 
-export function HeroSection() {
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-creative";
+import "swiper/css/pagination";
+import { CSSProperties } from "react";
+
+export default function HeroSection() {
   return (
-    <Carousel
-      opts={{
-        align: "start",
-        loop: true,
-        duration: 60
-      }}
-      plugins={[
-        Autoplay({
-          delay: 5000,
-        }),
-      ]}
-    >
-      <CarouselContent>
-        <CarouselItem className="flex items-center justify-center -z-20">
-          <div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-              officia nemo at.
-            </p>
+    <div className="w-screen h-screen">
+      <Swiper
+        speed={1000}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        loop={true}
+        pagination={{ clickable: true }}
+        grabCursor={true}
+        effect={"creative"}
+        creativeEffect={{
+          prev: {
+            shadow: true,
+            translate: ["-20%", 0, -1],
+          },
+          next: {
+            translate: ["100%", 0, 0],
+          },
+        }}
+        modules={[EffectCreative, Autoplay, Pagination]}
+        className="mySwiper3"
+        style={
+          {
+            "--swiper-pagination-color": "hsl(var(--primary))",
+          } as CSSProperties
+        }
+      >
+        <SwiperSlide>
+          <Image
+            src="/img/sekret.jpg"
+            alt="sekret"
+            className="size-full absolute top-0 object-cover -z-10"
+            width={1920}
+            height={1080}
+          />
+          <div className="size-full flex flex-col px-4 lg:px-12 justify-center">
+            <h1 className="font-bold text-3xl lg:text-5xl text-[hsl(210_40%_98%)]">
+              Himpunan Mahasiswa Aceh Besar
+            </h1>
           </div>
-        </CarouselItem>
-        <CarouselItem className="flex items-center justify-center -z-20">
-          <div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-              officia nemo at.
-            </p>
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image
+            src="/img/sekret.jpg"
+            alt="sekret"
+            className="size-full absolute top-0 object-cover -z-10"
+            width={1920}
+            height={1080}
+          />
+          <div className="size-full flex flex-col px-4 lg:px-12 justify-center">
+            <h1 className="font-bold text-3xl lg:text-5xl text-[hsl(210_40%_98%)]">
+              Himpunan Mahasiswa Aceh Besar
+            </h1>
           </div>
-        </CarouselItem>
-        <CarouselItem className="flex items-center justify-center -z-20">
-          <div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-              officia nemo at.
-            </p>
-          </div>
-        </CarouselItem>
-      </CarouselContent>
-      <CarouselPrevious className="left-12" />
-      <CarouselNext className="right-12" />
-    </Carousel>
+        </SwiperSlide>
+      </Swiper>
+    </div>
   );
 }
