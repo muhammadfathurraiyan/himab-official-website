@@ -11,7 +11,7 @@ import { CSSProperties } from "react";
 
 export default function HeroSection() {
   return (
-    <div className="w-screen h-screen">
+    <section className="w-screen h-screen">
       <Swiper
         speed={1000}
         autoplay={{
@@ -68,6 +68,6 @@ export default function HeroSection() {
           </div>
         </SwiperSlide>
       </Swiper>
-    </div>
+    </section>
   );
 }

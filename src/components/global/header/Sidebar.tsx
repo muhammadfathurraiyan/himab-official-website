@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { AlignRight, Instagram, Menu, SeparatorVertical } from "lucide-react";
 import Link from "next/link";
-import { ThemeToggle } from "../theme/ThemeToggle";
+import { ThemeToggle } from "../ThemeToggle";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 

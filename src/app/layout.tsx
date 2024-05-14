@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/global/theme/ThemeProvider";
-import { GeistSans } from 'geist/font/sans';
-import { GeistMono } from 'geist/font/mono';
+import { Provider } from "@/components/provider/Provider";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import Header from "@/components/global/header/Header";
-
 
 export const metadata: Metadata = {
   title: "Himpunan Mahasiswa Aceh Besar",
@@ -21,7 +20,7 @@ export default function RootLayout({
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} min-h-screen bg-background antialiased`}
       >
-        <ThemeProvider
+        <Provider
           attribute="class"
           defaultTheme="system"
           enableSystem
@@ -29,7 +28,7 @@ export default function RootLayout({
         >
           <Header />
           {children}
-        </ThemeProvider>
+        </Provider>
       </body>
     </html>
   );

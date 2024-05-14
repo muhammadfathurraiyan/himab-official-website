@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { ThemeToggle } from "../theme/ThemeToggle";
+import { ThemeToggle } from "../ThemeToggle";
 import { usePathname } from "next/navigation";
 import { Instagram } from "lucide-react";
 import Whatsapp from "@/components/icon/Whatsapp";
