@@ -1,5 +1,6 @@
+import prisma from "@/lib/db";
 import React from "react";
 
-export default function page() {
-  return <div>page</div>;
+export default async function page() {
+  return <div cla>page</div>;
 }

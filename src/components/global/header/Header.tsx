@@ -1,12 +1,19 @@
+"use client";
 import { Instagram } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Whatsapp from "../../icon/Whatsapp";
 import { ThemeToggle } from "../ThemeToggle";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname();
   return (
-    <header className="py-4 px-12 max-lg:px-4 flex items-center justify-between">
+    <header
+      className={`${
+        pathname.startsWith("/dashboard") && "hidden"
+      } py-4 px-12 max-lg:px-4 flex items-center justify-between`}
+    >
       <Link href={"/"} className="flex items-center gap-2">
         <Image
           src="/img/logo.png"
