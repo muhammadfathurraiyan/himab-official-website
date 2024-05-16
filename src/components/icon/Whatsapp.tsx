@@ -4,7 +4,7 @@ export default function Whatsapp({ size, ...props }: { size?: number }) {
       {...props}
       stroke="currentColor"
       fill="currentColor"
-      stroke-width="0"
+      strokeWidth="0"
       viewBox="0 0 448 512"
       height={size ?? 24}
       width={size ?? 24}
