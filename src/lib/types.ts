@@ -18,7 +18,8 @@ export const CreateUserSchema = z
     confirmPassword: z.string().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Password harus sama.",
+    message: "Password yang anda isi berbeda",
+    path: ["confirmPassword"],
   });
 
 export const LoginSchema = z.object({

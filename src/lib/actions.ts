@@ -2,12 +2,11 @@
 import { CreateUserSchema } from "./types";
 import prisma from "./db";
 import bcrypt from "bcrypt";
-import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
-export const createAccount = async (newAccount: unknown) => {
+export const createAccount = async (data: unknown) => {
   // server side validation
-  const result = CreateUserSchema.safeParse(newAccount);
+  const result = CreateUserSchema.safeParse(data);
   if (!result.success) {
     let errorMessage = "";
     result.error.issues.forEach((issue) => {
@@ -36,5 +35,10 @@ export const createAccount = async (newAccount: unknown) => {
     },
   });
 
-  redirect("/admin/manajemen-admin");
+  revalidatePath("/admin/manajemen-admin");
+};
+
+export const deleteAccount = async (id: string) => {
+  await prisma.user.delete({ where: { id: id } });
+  revalidatePath("/admin/manajemen-admin");
 };

@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { ThemeProvider } from "@/components/provider/ThemeProvider";
 import Header from "@/components/global/header/Header";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Himpunan Mahasiswa Aceh Besar",
@@ -28,6 +29,8 @@ export default function RootLayout({
         >
           <Header />
           {children}
+
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

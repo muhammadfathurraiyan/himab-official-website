@@ -8,7 +8,7 @@ import {
   Headset,
   HandHelping,
   Database,
-  UserPlus,
+  UserRoundPlus,
 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -19,7 +19,7 @@ const superAdminPages = [
   {
     name: "Dashboard",
     url: "/dashboard",
-    icon: <Home size={16} />,
+    icon: <Home size={20} />,
   },
   {
     name: "Profile",
@@ -49,7 +49,7 @@ const superAdminPages = [
   {
     name: "Manajemen Admin",
     url: "/dashboard/manajemen-admin",
-    icon: <UserPlus size={20} />,
+    icon: <UserRoundPlus size={20} />,
   },
   // {
   //   name: "Event",
