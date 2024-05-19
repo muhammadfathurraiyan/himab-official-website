@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -31,12 +31,13 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import { CreateUserSchema } from "@/lib/types";
-import { createAccount, deleteAccount } from "@/lib/actions";
+import { CreateUserSchema, EditUserSchema } from "@/lib/types";
+import { createAccount, deleteAccount, editAccount } from "@/lib/actions";
 import { Dispatch, SetStateAction, useState } from "react";
 import { User } from "@prisma/client";
 
 type CreateForm = z.infer<typeof CreateUserSchema>;
+type EditForm = z.infer<typeof EditUserSchema>;
 
 export function CreateDialog() {
   const [open, setOpen] = useState(false);
@@ -65,8 +66,7 @@ export function CreateDialog() {
     if (result?.error) {
       toast({
         title: "Error!",
-        description:
-          "Terdapat kesalahan silahkan refresh halaman dan coba lagi.",
+        description: `Terdapat kesalahan silahkan refresh halaman dan coba lagi.\n ${result.error}`,
         variant: "destructive",
       });
     } else {
@@ -80,106 +80,110 @@ export function CreateDialog() {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button>Tambah</Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Tambah Akun</DialogTitle>
-          <DialogDescription>
-            Form untuk melakukan penambahan akun.
-          </DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="space-y-2 mb-4">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nama</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Sabirin" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="sabirin@mail.com" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password Konfirmasi</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="role"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Role</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
+    <>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+          <Button>Tambah</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Tambah Akun</DialogTitle>
+            <DialogDescription>
+              Form untuk melakukan penambahan akun.
+            </DialogDescription>
+          </DialogHeader>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="space-y-2 mb-4">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nama</FormLabel>
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Pilih Role" />
-                        </SelectTrigger>
+                        <Input placeholder="Sabirin" {...field} />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="super-admin">super-admin</SelectItem>
-                        <SelectItem value="manager">manager</SelectItem>
-                        <SelectItem value="sub-admin">sub-admin</SelectItem>
-                        <SelectItem value="admin">admin</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <Button className="float-right" type="submit">
-              Submit
-            </Button>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="sabirin@mail.com" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input type="password" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password Konfirmasi</FormLabel>
+                      <FormControl>
+                        <Input type="password" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="role"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Role</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Pilih Role" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="super-admin">
+                            super-admin
+                          </SelectItem>
+                          <SelectItem value="manager">manager</SelectItem>
+                          <SelectItem value="sub-admin">sub-admin</SelectItem>
+                          <SelectItem value="admin">admin</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <Button className="float-right" type="submit">
+                Submit
+              </Button>
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
@@ -244,35 +248,33 @@ export function EditDialog({
   user: User;
   setIsEditDialogOpen: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [open, setOpen] = useState(false);
-  const form = useForm<CreateForm>({
-    resolver: zodResolver(CreateUserSchema),
+  const form = useForm<EditForm>({
+    resolver: zodResolver(EditUserSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      role: "",
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      event: user.event ? "true" : "false",
+      resetPassword: "",
     },
   });
 
-  async function onSubmit(data: CreateForm) {
-    const newUser = {
+  async function onSubmit(data: EditForm) {
+    console.log("submit"); // this should trigger innit?
+    const newUpdateUser = {
       name: data.name,
       email: data.email,
-      password: data.password,
-      confirmPassword: data.confirmPassword,
+      resetPassword: data.resetPassword,
       role: data.role,
+      event: data.event,
     };
 
-    // const result = await createAccount(newUser);
-    const result = {};
+    const result = await editAccount(newUpdateUser, user.id);
 
-    if (result) {
+    if (result?.error) {
       toast({
         title: "Error!",
-        description:
-          "Terdapat kesalahan silahkan refresh halaman dan coba lagi.",
+        description: `Terdapat kesalahan silahkan refresh halaman dan coba lagi.\n ${result.error}`,
         variant: "destructive",
       });
     } else {
@@ -280,7 +282,7 @@ export function EditDialog({
       toast({
         title: "Berhasil di input",
         description:
-          "Akun berhasil di tambah, silahkan cek pada tabel data akun.",
+          "Akun berhasil di edit, silahkan cek pada tabel data akun.",
       });
     }
   }
@@ -325,32 +327,6 @@ export function EditDialog({
               />
               <FormField
                 control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password Konfirmasi</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
                 name="role"
                 render={({ field }) => (
                   <FormItem>
@@ -375,12 +351,47 @@ export function EditDialog({
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="event"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Status Event</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pilih Status Event" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="true">True</SelectItem>
+                        <SelectItem value="false">False</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="resetPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Reset Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
             <div className="flex items-center justify-end gap-4">
-              <DialogClose>
-                <Button type="button" variant={"outline"}>
-                  Batal
-                </Button>
+              <DialogClose className={buttonVariants({ variant: "outline" })}>
+                Batal
               </DialogClose>
               <Button type="submit">Submit</Button>
             </div>

@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <header
       className={`${
-        pathname.startsWith("/dashboard") && "hidden"
+        pathname.startsWith("/dashboard") || pathname === "/auth" ? "hidden" : ""
       } py-4 px-12 max-lg:px-4 flex items-center justify-between`}
     >
       <Link href={"/"} className="flex items-center gap-2">

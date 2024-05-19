@@ -11,9 +11,7 @@ export default function AdminLayout({
       <Sidebar />
       <div className="col-span-4 max-lg:col-span-5">
         <Header />
-        <section className="p-4">
-          {children}
-        </section>
+        <section className="p-4">{children}</section>
       </div>
     </main>
   );
