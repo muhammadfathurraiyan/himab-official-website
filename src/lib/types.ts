@@ -15,6 +15,7 @@ export const CreateUserSchema = z
       .string()
       .min(8, { message: "Password harus lebih dari 8 karakter." }),
     role: z.string().min(1, { message: "Role harus dipilih." }),
+    job: z.array(z.string()).min(1, { message: "Job harus dipilih." }),
     confirmPassword: z.string().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -34,6 +35,7 @@ export const EditUserSchema = z.object({
     .max(50, { message: "Email harus kurang dari 50 karakter." }),
   role: z.string().min(1, { message: "Role harus dipilih." }),
   event: z.string().optional(),
+  job: z.string().array().min(1, { message: "Job harus dipilih." }),
   resetPassword: z.string().optional(),
 });
 

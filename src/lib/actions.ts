@@ -4,7 +4,7 @@ import prisma from "./db";
 import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { AuthError } from "next-auth";
-import { signIn } from "./auth/auth";
+import { signIn, signOut } from "./auth/auth";
 
 export const createAccount = async (data: unknown) => {
   // server side validation
@@ -34,6 +34,7 @@ export const createAccount = async (data: unknown) => {
       email: result.data.email,
       password: hashedPassword,
       role: result.data.role,
+      job: result.data.job,
     },
   });
 
@@ -85,7 +86,7 @@ export const editAccount = async (data: unknown, id: string) => {
         email: result.data.email,
         password: hashedPassword,
         role: result.data.role,
-        event: result.data.event === "true" ? true : false,
+        job: result.data.job,
       },
       where: {
         id: id,
@@ -97,7 +98,7 @@ export const editAccount = async (data: unknown, id: string) => {
         name: result.data.name,
         email: result.data.email,
         role: result.data.role,
-        event: result.data.event === "true" ? true : false,
+        job: result.data.job,
       },
       where: {
         id: id,
@@ -108,7 +109,7 @@ export const editAccount = async (data: unknown, id: string) => {
   revalidatePath("/admin/manajemen-admin");
 };
 
-export async function authenticate(data: FormData) {
+export async function loginAction(data: FormData) {
   try {
     await signIn("credentials", data);
   } catch (error) {
@@ -122,4 +123,8 @@ export async function authenticate(data: FormData) {
     }
     throw error;
   }
+}
+
+export async function logoutAction() {
+  await signOut();
 }

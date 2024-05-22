@@ -1,4 +1,5 @@
 import type { NextAuthConfig } from "next-auth";
+import prisma from "../db";
 
 export const authConfig = {
   pages: {
@@ -23,6 +24,30 @@ export const authConfig = {
         return Response.redirect(new URL("/dashboard", nextUrl));
       }
       return true;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        if (user?.email) {
+          const data = await prisma.user.findFirst({
+            where: { email: user.email },
+          });
+
+          if (data) {
+            token.id = data.id;
+            token.job = data.job;
+            token.role = data.role;
+          }
+        }
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.job = token.job;
+        session.user.role = token.role;
+      }
+      return session;
     },
   },
 } satisfies NextAuthConfig;

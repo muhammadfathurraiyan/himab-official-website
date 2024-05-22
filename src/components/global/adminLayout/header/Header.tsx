@@ -40,6 +40,8 @@ import { ThemeToggle } from "../../ThemeToggle";
 import { usePathname } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { signOut } from "@/lib/auth/auth";
+import { logoutAction } from "@/lib/actions";
 
 const superAdminPages = [
   {
@@ -182,7 +184,9 @@ export default function Header() {
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuItem>Support</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => logoutAction()}>
+              Logout
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

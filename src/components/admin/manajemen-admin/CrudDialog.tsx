@@ -29,6 +29,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  MultiSelector,
+  MultiSelectorContent,
+  MultiSelectorInput,
+  MultiSelectorItem,
+  MultiSelectorList,
+  MultiSelectorTrigger,
+} from "@/components/ui/multi-select";
+
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { CreateUserSchema, EditUserSchema } from "@/lib/types";
@@ -38,6 +47,8 @@ import { User } from "@prisma/client";
 
 type CreateForm = z.infer<typeof CreateUserSchema>;
 type EditForm = z.infer<typeof EditUserSchema>;
+
+const job = ["akun", "berita", "database", "event"];
 
 export function CreateDialog() {
   const [open, setOpen] = useState(false);
@@ -49,6 +60,7 @@ export function CreateDialog() {
       password: "",
       confirmPassword: "",
       role: "",
+      job: [],
     },
   });
 
@@ -59,6 +71,7 @@ export function CreateDialog() {
       password: data.password,
       confirmPassword: data.confirmPassword,
       role: data.role,
+      job: data.job,
     };
 
     const result = await createAccount(newUser);
@@ -80,21 +93,21 @@ export function CreateDialog() {
   }
 
   return (
-    <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button>Tambah</Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Tambah Akun</DialogTitle>
-            <DialogDescription>
-              Form untuk melakukan penambahan akun.
-            </DialogDescription>
-          </DialogHeader>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="space-y-2 mb-4">
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button>Tambah</Button>
+      </DialogTrigger>
+      <DialogContent className="lg:max-w-3xl">
+        <DialogHeader>
+          <DialogTitle>Tambah Akun</DialogTitle>
+          <DialogDescription>
+            Form untuk melakukan penambahan akun.
+          </DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="space-y-2">
                 <FormField
                   control={form.control}
                   name="name"
@@ -116,32 +129,6 @@ export function CreateDialog() {
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input placeholder="sabirin@mail.com" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input type="password" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="confirmPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password Konfirmasi</FormLabel>
-                      <FormControl>
-                        <Input type="password" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -176,14 +163,72 @@ export function CreateDialog() {
                   )}
                 />
               </div>
-              <Button className="float-right" type="submit">
-                Submit
-              </Button>
-            </form>
-          </Form>
-        </DialogContent>
-      </Dialog>
-    </>
+              <div className="space-y-2">
+                <FormField
+                  control={form.control}
+                  name="job"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Pilih Job</FormLabel>
+                      <MultiSelector
+                        onValuesChange={field.onChange}
+                        values={field.value}
+                        className="space-y-0"
+                      >
+                        <MultiSelectorTrigger>
+                          <MultiSelectorInput placeholder="Pilih Job" />
+                        </MultiSelectorTrigger>
+                        <MultiSelectorContent>
+                          <MultiSelectorList>
+                            {job.map((job) => (
+                              <MultiSelectorItem key={job} value={job}>
+                                {job}
+                              </MultiSelectorItem>
+                            ))}
+                          </MultiSelectorList>
+                        </MultiSelectorContent>
+                      </MultiSelector>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input type="password" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password Konfirmasi</FormLabel>
+                      <FormControl>
+                        <Input type="password" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="flex items-center justify-end gap-4">
+              <DialogClose className={buttonVariants({ variant: "outline" })}>
+                Batal
+              </DialogClose>
+              <Button type="submit">Submit</Button>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -254,7 +299,7 @@ export function EditDialog({
       name: user.name,
       email: user.email,
       role: user.role,
-      event: user.event ? "true" : "false",
+      job: user.job,
       resetPassword: "",
     },
   });
@@ -266,7 +311,7 @@ export function EditDialog({
       email: data.email,
       resetPassword: data.resetPassword,
       role: data.role,
-      event: data.event,
+      job: data.job,
     };
 
     const result = await editAccount(newUpdateUser, user.id);
@@ -288,17 +333,17 @@ export function EditDialog({
   }
 
   return (
-    <>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Edit Akun</DialogTitle>
-          <DialogDescription>
-            Form untuk melakukan pengeditan akun.
-          </DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="space-y-2 mb-4">
+    <DialogContent className="lg:max-w-3xl">
+      <DialogHeader>
+        <DialogTitle>Edit Akun</DialogTitle>
+        <DialogDescription>
+          Form untuk melakukan pengeditan akun.
+        </DialogDescription>
+      </DialogHeader>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="grid grid-cols-2 gap-2 mb-4">
+            <div className="space-y-2">
               <FormField
                 control={form.control}
                 name="name"
@@ -351,27 +396,32 @@ export function EditDialog({
                   </FormItem>
                 )}
               />
+            </div>
+            <div className="space-y-2">
               <FormField
                 control={form.control}
-                name="event"
+                name="job"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Status Event</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
+                    <FormLabel>Pilih Job</FormLabel>
+                    <MultiSelector
+                      onValuesChange={field.onChange}
+                      values={field.value}
+                      className="space-y-0"
                     >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Pilih Status Event" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="true">True</SelectItem>
-                        <SelectItem value="false">False</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
+                      <MultiSelectorTrigger>
+                        <MultiSelectorInput placeholder="Pilih Job" />
+                      </MultiSelectorTrigger>
+                      <MultiSelectorContent>
+                        <MultiSelectorList>
+                          {job.map((job) => (
+                            <MultiSelectorItem key={job} value={job}>
+                              {job}
+                            </MultiSelectorItem>
+                          ))}
+                        </MultiSelectorList>
+                      </MultiSelectorContent>
+                    </MultiSelector>
                   </FormItem>
                 )}
               />
@@ -389,15 +439,15 @@ export function EditDialog({
                 )}
               />
             </div>
-            <div className="flex items-center justify-end gap-4">
-              <DialogClose className={buttonVariants({ variant: "outline" })}>
-                Batal
-              </DialogClose>
-              <Button type="submit">Submit</Button>
-            </div>
-          </form>
-        </Form>
-      </DialogContent>
-    </>
+          </div>
+          <div className="flex items-center justify-end gap-4">
+            <DialogClose className={buttonVariants({ variant: "outline" })}>
+              Batal
+            </DialogClose>
+            <Button type="submit">Submit</Button>
+          </div>
+        </form>
+      </Form>
+    </DialogContent>
   );
 }

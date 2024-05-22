@@ -53,4 +53,19 @@
   * {
     @apply border-border;
   }
+
+  /* width */
+  ::-webkit-scrollbar {
+    @apply size-2;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply bg-secondary;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    @apply bg-foreground/60 rounded-full;
+  }
 }

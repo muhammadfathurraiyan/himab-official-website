@@ -18,9 +18,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import { authenticate } from "@/lib/actions";
+import { loginAction } from "@/lib/actions";
 import { LoginSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { redirect } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -39,7 +40,7 @@ export default function LoginForm() {
     const newData = new FormData();
     newData.append("email", data.email);
     newData.append("password", data.password);
-    const result = await authenticate(newData);
+    const result = await loginAction(newData);
 
     if (result) {
       toast({

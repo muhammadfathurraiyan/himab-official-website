@@ -19,7 +19,6 @@ import {
 } from "@/components/admin/manajemen-admin/CrudDialog";
 import { useState } from "react";
 import { Dialog } from "@radix-ui/react-dialog";
-import { DialogTrigger } from "@/components/ui/dialog";
 
 export const userColumns: ColumnDef<User>[] = [
   {
@@ -63,9 +62,9 @@ export const userColumns: ColumnDef<User>[] = [
     ),
   },
   {
-    accessorKey: "event",
+    accessorKey: "job",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Event" />
+      <DataTableColumnHeader column={column} title="Job" />
     ),
   },
   {
