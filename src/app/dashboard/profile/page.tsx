@@ -1,7 +1,12 @@
+import ContentAsramaMahasiswa from "@/components/admin/profile/asrama-mahasiswa/ContentAsramaMahasiswa";
 import ContentSejarah from "@/components/admin/profile/sejarah/ContentSejarah";
+import ContentStrukturOrganisasi from "@/components/admin/profile/struktur-organisasi/ContentStrukturOrganisasi";
+import ContentTentangHimab from "@/components/admin/profile/tentang-himab/ContentTentangHimab";
+import ContentVisiMisi from "@/components/admin/profile/visi-misi/ContentVisiMisi";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import prisma from "@/lib/db";
 
-export default function page() {
+export default async function page() {
   return (
     <>
       <h1 className="font-bold text-3xl">Profil</h1>
@@ -23,12 +28,18 @@ export default function page() {
         <TabsContent value="sejarah">
           <ContentSejarah />
         </TabsContent>
-        <TabsContent value="visi-misi">Visi-misi</TabsContent>
-        <TabsContent value="tentang-himab">Tentang HIMAB</TabsContent>
-        <TabsContent value="struktur-organisasi">
-          Struktur organisasi
+        <TabsContent value="visi-misi">
+          <ContentVisiMisi />
         </TabsContent>
-        <TabsContent value="asrama-mahasiswa">Asrama mahasiswa</TabsContent>
+        <TabsContent value="tentang-himab">
+          <ContentTentangHimab />
+        </TabsContent>
+        <TabsContent value="struktur-organisasi">
+          <ContentStrukturOrganisasi />
+        </TabsContent>
+        <TabsContent value="asrama-mahasiswa">
+          <ContentAsramaMahasiswa />
+        </TabsContent>
       </Tabs>
     </>
   );

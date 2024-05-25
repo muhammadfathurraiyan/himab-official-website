@@ -17,6 +17,7 @@ export default function CardInfo({
   description: string;
   button: {
     title: string;
+    onClick?: () => void;
   };
 }) {
   return (
@@ -26,7 +27,7 @@ export default function CardInfo({
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardFooter>
-        <Button variant={"outline"} type="button">
+        <Button onClick={button.onClick} variant={"outline"} type="button">
           {button.title}
         </Button>
       </CardFooter>
