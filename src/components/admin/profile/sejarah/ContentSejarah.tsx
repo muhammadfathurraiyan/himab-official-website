@@ -28,7 +28,7 @@ export default function ContentSejarah() {
           isOpen ? "visible opacity-100" : "invisible opacity-0"
         } transition-all space-y-4`}
       >
-        <CustomEditor content={content} setContent={setContent} />
+        <CustomEditor content={content} onChange={setContent} placeholder="Hello" />
         <Button className="float-right max-lg:w-full" onClick={() => setIsOpen(!isOpen)}><Save className="mr-2 size-5" /> Save</Button>
       </div>
     </div>

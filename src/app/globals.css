@@ -84,7 +84,40 @@
   ::-webkit-scrollbar-thumb {
     @apply bg-foreground/60 rounded-full;
   }
-  .tox-editor-header {
-    @apply bg-background !important;
+
+  .editor {
+    @apply min-h-[150px] flex flex-col flex-1 w-full rounded-b-md bg-transparent px-3 py-2 ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto;
+  }
+
+  .editor h1 {
+    @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+  }
+
+  .editor h2 {
+    @apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0;
+  }
+
+  .editor h3 {
+    @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+  }
+
+  .editor p {
+    @apply leading-7 [&:not(:first-child)]:mt-6;
+  }
+
+  .editor blockquote {
+    @apply mt-6 border-l-2 pl-6 italic font-mono;
+  }
+
+  .editor ul {
+    @apply my-6 ml-6 list-disc [&>li]:mt-2;
+  }
+
+  .editor ol {
+    @apply list-decimal my-6 ml-6 [&>li]:mt-2;
+  }
+
+  .editor a {
+    @apply text-primary underline hover:text-primary/80 transition-colors;
   }
 }

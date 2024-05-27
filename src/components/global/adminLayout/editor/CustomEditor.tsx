@@ -1,93 +1,58 @@
-"use client";
-import { useEditor, EditorContent, type Editor } from "@tiptap/react";
+import { EditorContent, mergeAttributes, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Bold, Strikethrough, Italic, List, ListOrdered } from "lucide-react";
-import { Toggle } from "@/components/ui/toggle";
-import { Separator } from "@/components/ui/separator";
+import Highlight from "@tiptap/extension-highlight";
+import TextAlign from "@tiptap/extension-text-align";
+import Link from "@tiptap/extension-link";
+import Image from "@tiptap/extension-image";
+import Dropcursor from "@tiptap/extension-dropcursor";
+import Toolbar from "./toolbar/Toolbar";
 
-interface IContent {
+type TEditorProps = {
   content: string;
-  setContent: React.Dispatch<React.SetStateAction<string>>;
-}
+  placeholder?: string;
+  onChange?: (value: string) => void;
+};
 
-export default function CustomEditor({ content, setContent }: IContent) {
+export default function CustomEditor({
+  content,
+  placeholder,
+  onChange,
+}: TEditorProps) {
   const editor = useEditor({
     editorProps: {
       attributes: {
-        class:
-          "min-h-[80px] w-full rounded-lg rounded-t-none border-2 bg-transparent px-3 py-2 border-t-0 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto",
+        class: "editor",
       },
     },
     extensions: [
-      StarterKit.configure({
-        orderedList: {
-          HTMLAttributes: {
-            class: "list-decimal pl-4",
-          },
-        },
-        bulletList: {
-          HTMLAttributes: {
-            class: "list-disc pl-4",
-          },
-        },
+      StarterKit,
+      Highlight,
+      Dropcursor,
+      Image.configure({
+        inline: true,
+      }),
+      TextAlign.configure({
+        types: ["heading", "paragraph", "image"],
+      }),
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
       }),
     ],
     content: content,
+    onUpdate: ({ editor }) => {
+      if (onChange) {
+        onChange(editor.getHTML());
+      }
+    },
   });
 
-  return (
-    <div>
-      {editor ? <Toolbar editor={editor} /> : null}
-      <EditorContent editor={editor} />
-    </div>
-  );
-}
+  if (!editor) return <></>;
 
-function Toolbar({ editor }: { editor: Editor }) {
   return (
-    <div className="flex items-center justify-between border bg-secondary rounded-t-lg p-1">
-      <div className="flex items-center gap-1">
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("bold")}
-          onPressedChange={() => editor.chain().focus().toggleBold().run()}
-        >
-          <Bold className="h-4 w-4" />
-        </Toggle>
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("italic")}
-          onPressedChange={() => editor.chain().focus().toggleItalic().run()}
-        >
-          <Italic className="h-4 w-4" />
-        </Toggle>
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("strike")}
-          onPressedChange={() => editor.chain().focus().toggleStrike().run()}
-        >
-          <Strikethrough className="h-4 w-4" />
-        </Toggle>
-        <Separator orientation="vertical" className="w-[1px] h-8" />
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("bulletList")}
-          onPressedChange={() =>
-            editor.chain().focus().toggleBulletList().run()
-          }
-        >
-          <List className="h-4 w-4" />
-        </Toggle>
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("orderedList")}
-          onPressedChange={() =>
-            editor.chain().focus().toggleOrderedList().run()
-          }
-        >
-          <ListOrdered className="h-4 w-4" />
-        </Toggle>
-      </div>
+    <div className="border rounded-md">
+      <Toolbar editor={editor} />
+      <EditorContent editor={editor} placeholder={placeholder} />
     </div>
   );
 }
