@@ -49,3 +49,14 @@ export const LoginSchema = z.object({
     .string()
     .min(8, { message: "Password harus lebih dari 8 karakter." }),
 });
+
+export const SejarahSchema = z.object({
+  title: z
+    .string()
+    .min(1, { message: "Judul harus lebih dari 1 karakter." })
+    .max(50, { message: "Judul harus kurang dari 50 karakter." }),
+  image: z.string().min(12, { message: "Link gambar tidak valid." }),
+  excerpt: z.string().optional(),
+  content: z.string().optional(),
+  userId: z.string().min(1, { message: "Ada kesalahan!." }),
+});

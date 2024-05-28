@@ -86,7 +86,7 @@
   }
 
   .editor {
-    @apply min-h-[150px] flex flex-col flex-1 w-full rounded-b-md bg-transparent px-3 py-2 ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto;
+    @apply min-h-[150px] max-h-screen  w-full rounded-b-md bg-transparent px-3 py-2 ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto;
   }
 
   .editor h1 {
@@ -119,5 +119,9 @@
 
   .editor a {
     @apply text-primary underline hover:text-primary/80 transition-colors;
+  }
+
+  .editor img {
+    @apply block mx-auto w-full;
   }
 }

@@ -1,5 +1,5 @@
 "use server";
-import { CreateUserSchema, EditUserSchema } from "./types";
+import { CreateUserSchema, EditUserSchema, SejarahSchema } from "./types";
 import prisma from "./db";
 import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
@@ -127,4 +127,28 @@ export async function loginAction(data: FormData) {
 
 export async function logoutAction() {
   await signOut();
+}
+
+export async function editSejarah(data: unknown, id: string) {
+  const result = SejarahSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.sejarah.update({
+    data: {
+      title: result.data.title,
+      image: result.data.image,
+      excerpt: result.data.excerpt,
+      content: result.data.content,
+      userId: result.data.userId,
+    },
+    where: { id: id },
+  });
+
+  revalidatePath("/dashboard/profile");
 }

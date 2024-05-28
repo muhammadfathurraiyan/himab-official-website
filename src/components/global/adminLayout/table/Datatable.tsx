@@ -24,15 +24,29 @@ import {
 import { useState } from "react";
 import { DataTablePagination } from "./DataTablePagination";
 import { DataTableViewOptions } from "./DataTableViewOptions";
+import DatatableSearch from "./DatatableSearch";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  includes?: {
+    viewOptions?: boolean;
+    pagination?: boolean;
+    search?: {
+      isVisible: boolean;
+      column: string;
+    };
+  };
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  includes = {
+    pagination: false,
+    viewOptions: false,
+    search: { column: "", isVisible: false },
+  },
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -59,17 +73,12 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter nama..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <DataTableViewOptions table={table} />
+    <div className="space-y-4 overflow-auto">
+      <div className="flex items-center">
+        {includes.search?.isVisible && (
+          <DatatableSearch table={table} column={includes.search?.column} />
+        )}
+        {includes.viewOptions && <DataTableViewOptions table={table} />}
       </div>
       <div className="rounded-md border">
         <Table>
@@ -121,9 +130,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="mt-4">
-        <DataTablePagination table={table} />
-      </div>
+      {includes.pagination && <DataTablePagination table={table} />}
     </div>
   );
 }

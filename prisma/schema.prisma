@@ -17,9 +17,10 @@ model User {
 }
 
 model Sejarah {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
   title   String
+  excerpt String?
   image   String
-  content String
+  content String?
   userId  String
 }

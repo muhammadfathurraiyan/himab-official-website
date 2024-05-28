@@ -4,9 +4,12 @@ import ContentStrukturOrganisasi from "@/components/admin/profile/struktur-organ
 import ContentTentangHimab from "@/components/admin/profile/tentang-himab/ContentTentangHimab";
 import ContentVisiMisi from "@/components/admin/profile/visi-misi/ContentVisiMisi";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { auth } from "@/lib/auth/auth";
 import prisma from "@/lib/db";
 
 export default async function page() {
+  const session = await auth();
+  const sejarah = await prisma.sejarah.findMany();
   return (
     <>
       <h1 className="font-bold text-3xl">Profil</h1>
@@ -26,7 +29,7 @@ export default async function page() {
           </TabsList>
         </div>
         <TabsContent value="sejarah">
-          <ContentSejarah />
+          <ContentSejarah userId={session?.user.id} sejarah={sejarah} />
         </TabsContent>
         <TabsContent value="visi-misi">
           <ContentVisiMisi />
