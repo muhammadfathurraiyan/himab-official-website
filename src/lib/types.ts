@@ -50,7 +50,7 @@ export const LoginSchema = z.object({
     .min(8, { message: "Password harus lebih dari 8 karakter." }),
 });
 
-export const SejarahSchema = z.object({
+export const BlogSchema = z.object({
   title: z
     .string()
     .min(1, { message: "Judul harus lebih dari 1 karakter." })

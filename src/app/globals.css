@@ -85,10 +85,6 @@
     @apply bg-foreground/60 rounded-full;
   }
 
-  .editor {
-    @apply min-h-[150px] max-h-screen  w-full rounded-b-md bg-transparent px-3 py-2 ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto;
-  }
-
   .editor h1 {
     @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
   }

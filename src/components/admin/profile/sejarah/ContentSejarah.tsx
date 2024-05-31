@@ -4,13 +4,7 @@ import CustomEditor from "@/components/global/adminLayout/editor/CustomEditor";
 import { sejarahColumns } from "@/components/global/adminLayout/table/Columns";
 import { DataTable } from "@/components/global/adminLayout/table/Datatable";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -22,32 +16,33 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { editSejarah } from "@/lib/actions";
-import { SejarahSchema } from "@/lib/types";
+import { BlogSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Sejarah } from "@prisma/client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-type SejarahForm = z.infer<typeof SejarahSchema>;
+type SejarahForm = z.infer<typeof BlogSchema>;
 
 export default function ContentSejarah({
   userId,
   sejarah,
 }: {
   userId?: string;
-  sejarah: Sejarah[];
+  sejarah: Sejarah | null;
 }) {
+  if (!sejarah) return <></>;
   const [isOpen, setIsOpen] = useState(false);
-  const [content, setContent] = useState(sejarah[0].content);
+  const [content, setContent] = useState(sejarah.content);
 
   const form = useForm<SejarahForm>({
-    resolver: zodResolver(SejarahSchema),
+    resolver: zodResolver(BlogSchema),
     defaultValues: {
-      title: sejarah[0].title,
-      image: sejarah[0].image,
-      content: sejarah[0].content ?? "",
-      excerpt: sejarah[0].excerpt ?? "",
+      title: sejarah.title,
+      image: sejarah.image,
+      content: sejarah.content ?? "",
+      excerpt: sejarah.excerpt ?? "",
       userId: userId,
     },
   });
@@ -61,7 +56,7 @@ export default function ContentSejarah({
       userId: data.userId,
     };
 
-    const result = await editSejarah(dataSejarah, sejarah[0].id);
+    const result = await editSejarah(dataSejarah, sejarah.id);
 
     if (result?.error) {
       toast({
@@ -82,11 +77,9 @@ export default function ContentSejarah({
   return (
     <div className="mt-4">
       <div
-        className={`${
-          !isOpen ? "" : "hidden"
-        } lg:grid lg:items-start lg:grid-cols-3 mt-4 lg:gap-4 max-lg:space-y-4 w-full`}
+        className={`${isOpen ? "hidden" : "flex"} flex-col mt-4 gap-4 w-full`}
       >
-        <div className="size-full">
+        <div>
           <CardInfo
             description="Jika anda ingin melakukan pengeditan halaman sejarah, klik tombol di bawah untuk melakukan pengeditan tentang sejarah."
             title="Sejarah"
@@ -96,13 +89,14 @@ export default function ContentSejarah({
             }}
           />
         </div>
-        <div className="lg:col-span-2 size-full">
-          <Card className="size-full">
+        <div>
+          <Card>
             <CardHeader>
+              <CardTitle>Tabel data sejarah</CardTitle>
               <DataTable
                 includes={{ viewOptions: true }}
                 columns={sejarahColumns}
-                data={sejarah}
+                data={[sejarah]}
               />
             </CardHeader>
           </Card>
@@ -110,12 +104,21 @@ export default function ContentSejarah({
       </div>
       <div
         className={`${
-          isOpen ? "visible opacity-100" : "invisible opacity-0"
+          isOpen ? "visible opacity-100" : "hidden invisible opacity-0"
         } transition-all`}
       >
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(save)}>
-            <div className="space-y-2 mb-4">
+          <form
+            onSubmit={form.handleSubmit(save)}
+            className="border p-4 rounded-lg space-y-4"
+          >
+            <div>
+              <h2 className="font-bold text-xl">Form Sejarah</h2>
+              <p className="text-sm text-muted-foreground">
+                Silahkan mengubah form dibawah untuk mengedit sejarah
+              </p>
+            </div>
+            <div className="space-y-2">
               <FormField
                 control={form.control}
                 name="title"
@@ -124,7 +127,7 @@ export default function ContentSejarah({
                     <FormLabel>Judul</FormLabel>
                     <FormControl>
                       <Input
-                        className="w-[400px]"
+                        className="lg:w-[400px]"
                         placeholder="Sejarah"
                         {...field}
                       />
@@ -141,7 +144,7 @@ export default function ContentSejarah({
                     <FormLabel>Link gambar sampul</FormLabel>
                     <FormControl>
                       <Input
-                        className="w-[400px]"
+                        className="lg:w-[400px]"
                         placeholder="https://placehold.co/150x150"
                         {...field}
                       />
@@ -166,6 +169,7 @@ export default function ContentSejarah({
             </div>
             <div className="flex items-center gap-4">
               <Button
+                onClick={() => setIsOpen(false)}
                 variant={"outline"}
                 className="max-lg:w-full"
                 type="button"

@@ -23,4 +23,46 @@ model Sejarah {
   image   String
   content String?
   userId  String
+  view    Int?
+}
+
+model VisiMisi {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  title   String
+  excerpt String?
+  image   String
+  content String?
+  userId  String
+  view    Int?
+}
+
+model Tentang {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  title   String
+  excerpt String?
+  image   String
+  content String?
+  userId  String
+  view    Int?
+}
+
+model Berita {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  title    String
+  category String
+  excerpt  String?
+  image    String
+  content  String?
+  userId   String
+  view     Int?
+}
+
+model Kontak {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  title   String
+  excerpt String?
+  image   String
+  content String?
+  userId  String
+  view    Int?
 }

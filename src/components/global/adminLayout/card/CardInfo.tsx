@@ -27,7 +27,7 @@ export default function CardInfo({
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardFooter>
-        <Button onClick={button.onClick} variant={"outline"} type="button">
+        <Button onClick={button.onClick} type="button">
           {button.title}
         </Button>
       </CardFooter>

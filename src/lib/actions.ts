@@ -1,10 +1,11 @@
 "use server";
-import { CreateUserSchema, EditUserSchema, SejarahSchema } from "./types";
+import { CreateUserSchema, EditUserSchema, BlogSchema } from "./types";
 import prisma from "./db";
 import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { AuthError } from "next-auth";
 import { signIn, signOut } from "./auth/auth";
+import { redirect } from "next/navigation";
 
 export const createAccount = async (data: unknown) => {
   // server side validation
@@ -112,6 +113,7 @@ export const editAccount = async (data: unknown, id: string) => {
 export async function loginAction(data: FormData) {
   try {
     await signIn("credentials", data);
+    redirect("/dashboard");
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -130,7 +132,7 @@ export async function logoutAction() {
 }
 
 export async function editSejarah(data: unknown, id: string) {
-  const result = SejarahSchema.safeParse(data);
+  const result = BlogSchema.safeParse(data);
   if (!result.success) {
     let errorMessage = "";
     result.error.issues.forEach((issue) => {
@@ -140,6 +142,54 @@ export async function editSejarah(data: unknown, id: string) {
   }
 
   await prisma.sejarah.update({
+    data: {
+      title: result.data.title,
+      image: result.data.image,
+      excerpt: result.data.excerpt,
+      content: result.data.content,
+      userId: result.data.userId,
+    },
+    where: { id: id },
+  });
+
+  revalidatePath("/dashboard/profile");
+}
+
+export async function editVisiMisi(data: unknown, id: string) {
+  const result = BlogSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.visiMisi.update({
+    data: {
+      title: result.data.title,
+      image: result.data.image,
+      excerpt: result.data.excerpt,
+      content: result.data.content,
+      userId: result.data.userId,
+    },
+    where: { id: id },
+  });
+
+  revalidatePath("/dashboard/profile");
+}
+
+export async function editTentangHimab(data: unknown, id: string) {
+  const result = BlogSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.tentang.update({
     data: {
       title: result.data.title,
       image: result.data.image,

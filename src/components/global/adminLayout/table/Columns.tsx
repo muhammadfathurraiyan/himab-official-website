@@ -131,6 +131,7 @@ export const sejarahColumns: ColumnDef<Sejarah>[] = [
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
+        className="mt-1"
       />
     ),
     cell: ({ row }) => (
@@ -166,10 +167,124 @@ export const sejarahColumns: ColumnDef<Sejarah>[] = [
     cell: () => {
       return (
         <Link
-          href={"/profile/sejarah"}
+          href={"/profil/sejarah"}
           className={buttonVariants({ variant: "ghost", size: "icon" })}
         >
-          <Eye className="size-4" />
+          <Eye className="size-5" />
+        </Link>
+      );
+    },
+  },
+];
+
+export const visiMisiColumns: ColumnDef<Sejarah>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+        className="mt-1"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "title",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Judul" />
+    ),
+  },
+  {
+    accessorKey: "excerpt",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Kutipan" />
+    ),
+  },
+  {
+    accessorKey: "image",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Gambar" />
+    ),
+  },
+  {
+    id: "actions",
+    cell: () => {
+      return (
+        <Link
+          href={"/profil/visi-misi"}
+          className={buttonVariants({ variant: "ghost", size: "icon" })}
+        >
+          <Eye className="size-5" />
+        </Link>
+      );
+    },
+  },
+];
+
+export const tentangHimabColumns: ColumnDef<Sejarah>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+        className="mt-1"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "title",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Judul" />
+    ),
+  },
+  {
+    accessorKey: "excerpt",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Kutipan" />
+    ),
+  },
+  {
+    accessorKey: "image",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Gambar" />
+    ),
+  },
+  {
+    id: "actions",
+    cell: () => {
+      return (
+        <Link
+          href={"/profil/tentang-himab"}
+          className={buttonVariants({ variant: "ghost", size: "icon" })}
+        >
+          <Eye className="size-5" />
         </Link>
       );
     },

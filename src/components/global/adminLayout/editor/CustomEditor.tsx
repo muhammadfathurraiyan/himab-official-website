@@ -1,4 +1,4 @@
-import { EditorContent, mergeAttributes, useEditor } from "@tiptap/react";
+import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
@@ -20,7 +20,8 @@ export default function CustomEditor({
   const editor = useEditor({
     editorProps: {
       attributes: {
-        class: "editor",
+        class:
+          "editor min-h-[150px] max-h-screen w-full rounded-b-md bg-transparent px-3 py-2 ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto;",
       },
     },
     extensions: [
@@ -46,7 +47,7 @@ export default function CustomEditor({
   if (!editor) return <></>;
 
   return (
-    <div className="border rounded-md flex flex-col flex-1 w-full overflow-hidden">
+    <div className="border rounded-md flex flex-col flex-1 w-full overflow-auto">
       <Toolbar editor={editor} />
       <EditorContent editor={editor} placeholder={placeholder} />
     </div>

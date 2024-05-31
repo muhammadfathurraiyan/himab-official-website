@@ -51,7 +51,7 @@ const superAdminPages = [
   },
   {
     name: "Profile",
-    url: "/dashboard/profile",
+    url: "/dashboard/profil",
     icon: <BookOpenCheck size={20} />,
   },
   {

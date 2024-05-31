@@ -9,7 +9,22 @@ import prisma from "@/lib/db";
 
 export default async function page() {
   const session = await auth();
-  const sejarah = await prisma.sejarah.findMany();
+  const sejarah = await prisma.sejarah.findFirst();
+  const visiMisi = await prisma.visiMisi.findFirst();
+  const tentang = await prisma.tentang.findFirst();
+
+  // await prisma.tentang.create({
+  //   data: {
+  //     title: "Tentang Himpunan Mahasiswa Aceh Besar",
+  //     image: "https://placehold.co/800x400",
+  //     excerpt:
+  //       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eveniet, ex.",
+  //     content:
+  //       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eveniet, ex.",
+  //     userId: session?.user.id!,
+  //   },
+  // });
+
   return (
     <>
       <h1 className="font-bold text-3xl">Profil</h1>
@@ -32,10 +47,10 @@ export default async function page() {
           <ContentSejarah userId={session?.user.id} sejarah={sejarah} />
         </TabsContent>
         <TabsContent value="visi-misi">
-          <ContentVisiMisi />
+          <ContentVisiMisi userId={session?.user.id} visiMisi={visiMisi} />
         </TabsContent>
         <TabsContent value="tentang-himab">
-          <ContentTentangHimab />
+          <ContentTentangHimab userId={session?.user.id} tentang={tentang} />
         </TabsContent>
         <TabsContent value="struktur-organisasi">
           <ContentStrukturOrganisasi />

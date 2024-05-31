@@ -5,7 +5,7 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from "@/components/ui/card";
 import {
   Form,
@@ -20,6 +20,7 @@ import { toast } from "@/components/ui/use-toast";
 import { loginAction } from "@/lib/actions";
 import { LoginSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { redirect } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 

@@ -22,7 +22,7 @@ import FormatImage from "./FormatImage";
 
 export default function Toolbar({ editor }: { editor: Editor }) {
   return (
-    <div className="flex items-center justify-between p-1 bg-muted/40 rounded-t overflow-auto">
+    <div className="sticky top-0 z-10 flex items-center justify-between bg-muted/40 backdrop-blur p-1 rounded-t overflow-auto">
       <div className="flex items-center gap-2">
         <FormatType editor={editor} />
         <Toggle
