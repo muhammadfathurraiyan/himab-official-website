@@ -1,5 +1,10 @@
 "use server";
-import { CreateUserSchema, EditUserSchema, BlogSchema } from "./types";
+import {
+  CreateUserSchema,
+  EditUserSchema,
+  BlogSchema,
+  KategoriSchema,
+} from "./types";
 import prisma from "./db";
 import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
@@ -39,12 +44,12 @@ export const createAccount = async (data: unknown) => {
     },
   });
 
-  revalidatePath("/admin/manajemen-admin");
+  revalidatePath("/dashboard/manajemen-admin");
 };
 
 export const deleteAccount = async (id: string) => {
   await prisma.user.delete({ where: { id: id } });
-  revalidatePath("/admin/manajemen-admin");
+  revalidatePath("/dashboard/manajemen-admin");
 };
 
 export const editAccount = async (data: unknown, id: string) => {
@@ -107,7 +112,7 @@ export const editAccount = async (data: unknown, id: string) => {
     });
   }
 
-  revalidatePath("/admin/manajemen-admin");
+  revalidatePath("/dashboard/manajemen-admin");
 };
 
 export async function loginAction(data: FormData) {
@@ -202,3 +207,73 @@ export async function editTentangHimab(data: unknown, id: string) {
 
   revalidatePath("/dashboard/profile");
 }
+
+export async function editKontak(data: unknown, id: string) {
+  const result = BlogSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.kontak.update({
+    data: {
+      title: result.data.title,
+      image: result.data.image,
+      excerpt: result.data.excerpt,
+      content: result.data.content,
+      userId: result.data.userId,
+    },
+    where: { id: id },
+  });
+
+  revalidatePath("/dashboard/kontak");
+}
+
+export async function createKategori(data: unknown) {
+  const result = KategoriSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.kategori.create({
+    data: {
+      title: result.data.title,
+      userId: result.data.userId,
+    },
+  });
+
+  revalidatePath("/dashboard/berita");
+}
+
+export async function editKategori(data: unknown, id: string) {
+  const result = KategoriSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.kategori.update({
+    data: {
+      title: result.data.title,
+      userId: result.data.userId,
+    },
+    where: { id: id },
+  });
+
+  revalidatePath("/dashboard/berita");
+}
+
+export const deleteKategori = async (id: string) => {
+  await prisma.kategori.delete({ where: { id: id } });
+  revalidatePath("/dashboard/berita");
+};

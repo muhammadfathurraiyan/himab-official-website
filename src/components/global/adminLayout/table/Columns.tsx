@@ -11,15 +11,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Sejarah, User } from "@prisma/client";
+import {
+  Kategori,
+  Kontak,
+  Sejarah,
+  Tentang,
+  User,
+  VisiMisi,
+} from "@prisma/client";
 import { DataTableColumnHeader } from "./DatatableColumnHeader";
 import {
   DeleteDialog,
   EditDialog,
 } from "@/components/admin/manajemen-admin/CrudDialog";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Dialog } from "@radix-ui/react-dialog";
 import Link from "next/link";
+import { DeleteKategoriDialog, EditKategoriDialog } from "@/components/admin/berita/kategori/CrudKategoriDialog";
 
 export const userColumns: ColumnDef<User>[] = [
   {
@@ -177,7 +185,7 @@ export const sejarahColumns: ColumnDef<Sejarah>[] = [
   },
 ];
 
-export const visiMisiColumns: ColumnDef<Sejarah>[] = [
+export const visiMisiColumns: ColumnDef<VisiMisi>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -234,7 +242,7 @@ export const visiMisiColumns: ColumnDef<Sejarah>[] = [
   },
 ];
 
-export const tentangHimabColumns: ColumnDef<Sejarah>[] = [
+export const tentangHimabColumns: ColumnDef<Tentang>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -286,6 +294,144 @@ export const tentangHimabColumns: ColumnDef<Sejarah>[] = [
         >
           <Eye className="size-5" />
         </Link>
+      );
+    },
+  },
+];
+
+export const kontakColumns: ColumnDef<Kontak>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+        className="mt-1"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "title",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Judul" />
+    ),
+  },
+  {
+    accessorKey: "excerpt",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Kutipan" />
+    ),
+  },
+  {
+    accessorKey: "image",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Gambar" />
+    ),
+  },
+  {
+    id: "actions",
+    cell: () => {
+      return (
+        <Link
+          href={"/kontak"}
+          className={buttonVariants({ variant: "ghost", size: "icon" })}
+        >
+          <Eye className="size-5" />
+        </Link>
+      );
+    },
+  },
+];
+
+export const kategoriColumns: ColumnDef<Kategori>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "title",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Kategori" />
+    ),
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const kategori = row.original;
+      const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+      const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+      return (
+        <>
+          <Dialog
+            open={isEditDialogOpen || isDeleteDialogOpen}
+            onOpenChange={
+              isEditDialogOpen ? setIsEditDialogOpen : setIsDeleteDialogOpen
+            }
+          >
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => setIsDeleteDialogOpen(true)}>
+                  <Trash2 className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                  Hapus
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setIsEditDialogOpen(true)}>
+                  <Pencil className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                  Edit
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            {isEditDialogOpen ? (
+              <EditKategoriDialog
+                kategori={kategori}
+                setIsEditDialogOpen={setIsEditDialogOpen}
+              />
+            ) : (
+            <DeleteKategoriDialog
+              id={kategori.id}
+              setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+            />
+            )}
+          </Dialog>
+        </>
       );
     },
   },

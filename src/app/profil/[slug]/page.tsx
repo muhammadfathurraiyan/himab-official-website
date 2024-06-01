@@ -16,10 +16,27 @@ export default async function page({ params }: { params: { slug: string } }) {
   }
 
   if (params.slug === "sejarah") {
-    const data = await prisma.sejarah.findMany();
+    const data = await prisma.sejarah.findFirst();
+    if (!data) return <></>;
     return (
       <div className="editor">
-        <Viewer content={data[0].content} />
+        <Viewer content={data.content} />
+      </div>
+    );
+  } else if (params.slug === "visi-misi") {
+    const data = await prisma.visiMisi.findFirst();
+    if (!data) return <></>;
+    return (
+      <div className="editor">
+        <Viewer content={data.content} />
+      </div>
+    );
+  } else if (params.slug === "tentang-himab") {
+    const data = await prisma.tentang.findFirst();
+    if (!data) return <></>;
+    return (
+      <div className="editor">
+        <Viewer content={data.content} />
       </div>
     );
   }

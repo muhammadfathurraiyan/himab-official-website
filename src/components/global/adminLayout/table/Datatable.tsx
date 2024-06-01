@@ -1,6 +1,5 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -36,6 +35,10 @@ interface DataTableProps<TData, TValue> {
       isVisible: boolean;
       column: string;
     };
+    header?: {
+      isVisible: boolean;
+      title: string;
+    };
   };
 }
 
@@ -46,6 +49,7 @@ export function DataTable<TData, TValue>({
     pagination: false,
     viewOptions: false,
     search: { column: "", isVisible: false },
+    header: { title: "", isVisible: false },
   },
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -77,6 +81,9 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center">
         {includes.search?.isVisible && (
           <DatatableSearch table={table} column={includes.search?.column} />
+        )}
+        {includes.header?.isVisible && (
+          <h2 className="text-2xl font-semibold">{includes.header.title}</h2>
         )}
         {includes.viewOptions && <DataTableViewOptions table={table} />}
       </div>

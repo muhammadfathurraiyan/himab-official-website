@@ -60,3 +60,11 @@ export const BlogSchema = z.object({
   content: z.string().optional(),
   userId: z.string().min(1, { message: "Ada kesalahan!." }),
 });
+
+export const KategoriSchema = z.object({
+  title: z
+    .string()
+    .min(1, { message: "Judul harus lebih dari 1 karakter." })
+    .max(50, { message: "Judul harus kurang dari 50 karakter." }),
+  userId: z.string().min(1, { message: "Ada kesalahan!." }),
+});

@@ -1,10 +1,10 @@
 "use client";
 import CardInfo from "@/components/global/adminLayout/card/CardInfo";
 import CustomEditor from "@/components/global/adminLayout/editor/CustomEditor";
-import { sejarahColumns } from "@/components/global/adminLayout/table/Columns";
+import { kontakColumns } from "@/components/global/adminLayout/table/Columns";
 import { DataTable } from "@/components/global/adminLayout/table/Datatable";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -15,40 +15,40 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import { editSejarah } from "@/lib/actions";
+import { editKontak } from "@/lib/actions";
 import { BlogSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Sejarah } from "@prisma/client";
+import { Kontak } from "@prisma/client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-type SejarahForm = z.infer<typeof BlogSchema>;
+type KontakForm = z.infer<typeof BlogSchema>;
 
-export default function ContentSejarah({
+export default function ContentKontak({
   userId,
-  sejarah,
+  kontak,
 }: {
   userId?: string;
-  sejarah: Sejarah | null;
+  kontak: Kontak | null;
 }) {
-  if (!sejarah) return <></>;
+  if (!kontak) return <></>;
   const [isOpen, setIsOpen] = useState(false);
-  const [content, setContent] = useState(sejarah.content);
+  const [content, setContent] = useState(kontak.content);
 
-  const form = useForm<SejarahForm>({
+  const form = useForm<KontakForm>({
     resolver: zodResolver(BlogSchema),
     defaultValues: {
-      title: sejarah.title,
-      image: sejarah.image,
-      content: sejarah.content ?? "",
-      excerpt: sejarah.excerpt ?? "",
+      title: kontak.title,
+      image: kontak.image,
+      content: kontak.content ?? "",
+      excerpt: kontak.excerpt ?? "",
       userId: userId,
     },
   });
 
-  const save = async (data: SejarahForm) => {
-    const dataSejarah = {
+  const save = async (data: KontakForm) => {
+    const dataKontak = {
       title: data.title,
       image: data.image,
       excerpt: content?.slice(0, 50).replace(/(<([^>]+)>)/gi, ""),
@@ -56,7 +56,7 @@ export default function ContentSejarah({
       userId: data.userId,
     };
 
-    const result = await editSejarah(dataSejarah, sejarah.id);
+    const result = await editKontak(dataKontak, kontak.id);
 
     if (result?.error) {
       toast({
@@ -69,7 +69,7 @@ export default function ContentSejarah({
       toast({
         title: "Berhasil di input",
         description:
-          "Sejarah berhasil di update, silahkan cek pada tabel data sejarah.",
+          "Kontak berhasil di update, silahkan cek pada tabel data kontak.",
       });
     }
   };
@@ -81,10 +81,10 @@ export default function ContentSejarah({
       >
         <div>
           <CardInfo
-            description="Jika anda ingin melakukan pengeditan halaman sejarah, klik tombol di bawah untuk melakukan pengeditan tentang sejarah."
-            title="Sejarah"
+            description="Jika anda ingin melakukan pengeditan halaman kontak, klik tombol di bawah untuk melakukan pengeditan tentang kontak."
+            title="Kontak"
             button={{
-              title: "Edit Sejarah",
+              title: "Edit Kontak",
               onClick: () => setIsOpen(!isOpen),
             }}
           />
@@ -97,11 +97,11 @@ export default function ContentSejarah({
                   viewOptions: true,
                   header: {
                     isVisible: true,
-                    title: "Tabel data sejarah",
+                    title: "Tabel data kontak",
                   },
                 }}
-                columns={sejarahColumns}
-                data={[sejarah]}
+                columns={kontakColumns}
+                data={[kontak]}
               />
             </CardHeader>
           </Card>
@@ -118,9 +118,9 @@ export default function ContentSejarah({
             className="border p-4 rounded-lg space-y-4"
           >
             <div>
-              <h2 className="font-bold text-xl">Form Sejarah</h2>
+              <h2 className="font-bold text-xl">Form Kontak</h2>
               <p className="text-sm text-muted-foreground">
-                Silahkan mengubah form dibawah untuk mengedit sejarah
+                Silahkan mengubah form dibawah untuk mengedit kontak
               </p>
             </div>
             <div className="space-y-2">
@@ -133,7 +133,7 @@ export default function ContentSejarah({
                     <FormControl>
                       <Input
                         className="lg:w-[400px]"
-                        placeholder="Sejarah"
+                        placeholder="Kontak"
                         {...field}
                       />
                     </FormControl>

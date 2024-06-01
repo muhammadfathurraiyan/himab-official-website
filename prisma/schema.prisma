@@ -66,3 +66,9 @@ model Kontak {
   userId  String
   view    Int?
 }
+
+model Kategori {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  title  String
+  userId String
+}

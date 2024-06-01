@@ -92,9 +92,14 @@ export default function ContentTentangHimab({
         <div>
           <Card>
             <CardHeader>
-              <CardTitle>Tabel data tentang HIMAB</CardTitle>
               <DataTable
-                includes={{ viewOptions: true }}
+                includes={{
+                  viewOptions: true,
+                  header: {
+                    isVisible: true,
+                    title: "Tabel data tentang HIMAB",
+                  },
+                }}
                 columns={tentangHimabColumns}
                 data={[tentang]}
               />
@@ -128,7 +133,7 @@ export default function ContentTentangHimab({
                     <FormControl>
                       <Input
                         className="lg:w-[400px]"
-                        placeholder="Sejarah"
+                        placeholder="Tentang HIMAB"
                         {...field}
                       />
                     </FormControl>

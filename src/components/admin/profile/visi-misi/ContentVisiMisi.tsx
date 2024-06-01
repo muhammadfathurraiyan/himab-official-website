@@ -4,7 +4,7 @@ import CustomEditor from "@/components/global/adminLayout/editor/CustomEditor";
 import { visiMisiColumns } from "@/components/global/adminLayout/table/Columns";
 import { DataTable } from "@/components/global/adminLayout/table/Datatable";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import { editSejarah, editVisiMisi } from "@/lib/actions";
+import { editVisiMisi } from "@/lib/actions";
 import { BlogSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { VisiMisi } from "@prisma/client";
@@ -92,9 +92,14 @@ export default function ContentVisiMisi({
         <div>
           <Card>
             <CardHeader>
-              <CardTitle>Tabel data visi-misi</CardTitle>
               <DataTable
-                includes={{ viewOptions: true }}
+                includes={{
+                  viewOptions: true,
+                  header: {
+                    isVisible: true,
+                    title: "Tabel data visi-misi",
+                  },
+                }}
                 columns={visiMisiColumns}
                 data={[visiMisi]}
               />
@@ -128,7 +133,7 @@ export default function ContentVisiMisi({
                     <FormControl>
                       <Input
                         className="lg:w-[400px]"
-                        placeholder="Sejarah"
+                        placeholder="Visi-misi"
                         {...field}
                       />
                     </FormControl>
