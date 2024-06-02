@@ -41,7 +41,7 @@ export default function ContentKontak({
                   },
                 }}
                 columns={kontakColumns}
-                data={[berita]}
+                data={berita}
               />
             </CardHeader>
           </Card>
