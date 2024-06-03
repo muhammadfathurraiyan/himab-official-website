@@ -3,15 +3,18 @@ import CardInfo from "@/components/global/adminLayout/card/CardInfo";
 import { kontakColumns } from "@/components/global/adminLayout/table/Columns";
 import { DataTable } from "@/components/global/adminLayout/table/Datatable";
 import { Card, CardHeader } from "@/components/ui/card";
-import { Berita, Kontak } from "@prisma/client";
+import { Berita, Kategori, Kontak } from "@prisma/client";
 import { useState } from "react";
+import { CreateBerita } from "./CrudBerita";
 
-export default function ContentKontak({
+export default function ContentBerita({
   userId,
   berita,
+  kategori,
 }: {
   userId?: string;
   berita: Berita[];
+  kategori: Kategori[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -21,10 +24,10 @@ export default function ContentKontak({
       >
         <div>
           <CardInfo
-            description="Jika anda ingin melakukan pengeditan halaman kontak, klik tombol di bawah untuk melakukan pengeditan tentang kontak."
-            title="Kontak"
+            description="Jika anda ingin melakukan pengeditan halaman berita, klik tombol di bawah untuk melakukan pengeditan tentang berita."
+            title="Berita"
             button={{
-              title: "Edit Kontak",
+              title: "Tambah Berita",
               onClick: () => setIsOpen(!isOpen),
             }}
           />
@@ -51,7 +54,9 @@ export default function ContentKontak({
         className={`${
           isOpen ? "visible opacity-100" : "hidden invisible opacity-0"
         } transition-all`}
-      ></div>
+      >
+        <CreateBerita kategori={kategori} isOpen={isOpen} setIsOpen={setIsOpen} />
+      </div>
     </div>
   );
 }

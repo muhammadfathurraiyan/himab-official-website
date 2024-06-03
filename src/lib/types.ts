@@ -68,3 +68,19 @@ export const KategoriSchema = z.object({
     .max(50, { message: "Judul harus kurang dari 50 karakter." }),
   userId: z.string().min(1, { message: "Ada kesalahan!." }),
 });
+
+export const BeritaSchema = z.object({
+  title: z
+    .string()
+    .min(1, { message: "Judul harus lebih dari 1 karakter." })
+    .max(50, { message: "Judul harus kurang dari 50 karakter." }),
+  slug: z
+    .string()
+    .min(1, { message: "Judul harus lebih dari 1 karakter." })
+    .max(50, { message: "Judul harus kurang dari 50 karakter." }),
+  image: z.string().min(12, { message: "Link gambar tidak valid." }),
+  category: z.string().min(1, { message: "Category harus dipilih." }),
+  excerpt: z.string().optional(),
+  content: z.string().optional(),
+  userId: z.string().min(1, { message: "Ada kesalahan!." }),
+});

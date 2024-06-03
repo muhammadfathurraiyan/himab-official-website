@@ -27,7 +27,10 @@ import {
 import { useContext, useState } from "react";
 import { Dialog } from "@radix-ui/react-dialog";
 import Link from "next/link";
-import { DeleteKategoriDialog, EditKategoriDialog } from "@/components/admin/berita/kategori/CrudKategoriDialog";
+import {
+  DeleteKategoriDialog,
+  EditKategoriDialog,
+} from "@/components/admin/berita/kategori/CrudKategoriDialog";
 
 export const userColumns: ColumnDef<User>[] = [
   {
@@ -80,6 +83,7 @@ export const userColumns: ColumnDef<User>[] = [
     id: "actions",
     cell: ({ row }) => {
       const user = row.original;
+      const isSelected = row.getIsSelected();
       const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
       const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
       return (
@@ -425,10 +429,10 @@ export const kategoriColumns: ColumnDef<Kategori>[] = [
                 setIsEditDialogOpen={setIsEditDialogOpen}
               />
             ) : (
-            <DeleteKategoriDialog
-              id={kategori.id}
-              setIsDeleteDialogOpen={setIsDeleteDialogOpen}
-            />
+              <DeleteKategoriDialog
+                id={kategori.id}
+                setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+              />
             )}
           </Dialog>
         </>

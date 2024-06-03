@@ -4,6 +4,7 @@ import {
   EditUserSchema,
   BlogSchema,
   KategoriSchema,
+  BeritaSchema,
 } from "./types";
 import prisma from "./db";
 import bcrypt from "bcrypt";
@@ -277,3 +278,28 @@ export const deleteKategori = async (id: string) => {
   await prisma.kategori.delete({ where: { id: id } });
   revalidatePath("/dashboard/berita");
 };
+
+export async function createBerita(data: unknown) {
+  const result = BeritaSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.berita.create({
+    data: {
+      title: result.data.title,
+      category: result.data.category,
+      slug: result.data.slug,
+      image: result.data.image,
+      content: result.data.content,
+      excerpt: result.data.excerpt,
+      userId: result.data.userId,
+    },
+  });
+
+  revalidatePath("/dashboard/berita");
+}
