@@ -22,11 +22,11 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import {
   createAccount,
+  createBerita,
   createKategori,
   deleteKategori,
   editKategori,
@@ -49,24 +49,25 @@ type CrudForm = z.infer<typeof BeritaSchema>;
 
 export function CreateBerita({
   userId,
-  isOpen,
-  setIsOpen,
+  isCreate,
+  setIsCreate,
   kategori,
 }: {
   userId?: string;
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  isCreate: boolean;
+  setIsCreate: Dispatch<SetStateAction<boolean>>;
   kategori: Kategori[];
 }) {
+  if (!isCreate) return <></>;
   const [content, setContent] = useState("");
   const form = useForm<CrudForm>({
     resolver: zodResolver(BeritaSchema),
     defaultValues: {
       title: "",
-      category: "",
       slug: "",
+      category: "",
       image: "",
-      content: "",
+      content: "<p><p>",
       excerpt: "",
       userId: userId,
     },
@@ -83,7 +84,7 @@ export function CreateBerita({
       userId: data.userId,
     };
 
-    const result = await createKategori(newBerita);
+    const result = await createBerita(newBerita);
 
     if (result?.error) {
       toast({
@@ -92,11 +93,11 @@ export function CreateBerita({
         variant: "destructive",
       });
     } else {
-      setIsOpen(false);
+      setIsCreate(false);
       toast({
         title: "Berhasil di input",
         description:
-          "Kategori berhasil di tambah, silahkan cek pada tabel data kategori.",
+          "Berita berhasil di tambah, silahkan cek pada tabel data berita.",
       });
     }
   };
@@ -108,9 +109,9 @@ export function CreateBerita({
         className="border p-4 rounded-lg space-y-4"
       >
         <div>
-          <h2 className="font-bold text-xl">Form Sejarah</h2>
+          <h2 className="font-bold text-xl">Form Berita</h2>
           <p className="text-sm text-muted-foreground">
-            Silahkan mengubah form dibawah untuk mengedit sejarah
+            Silahkan mengisi form dibawah untuk menambah berita
           </p>
         </div>
         <div className="space-y-2">
@@ -160,7 +161,7 @@ export function CreateBerita({
             name="category"
             render={({ field }) => (
               <FormItem className="lg:w-[400px]">
-                <FormLabel>Role</FormLabel>
+                <FormLabel>Kategori</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -172,7 +173,7 @@ export function CreateBerita({
                   </FormControl>
                   <SelectContent>
                     {kategori.map((kategori) => (
-                      <SelectItem value={kategori.title}>
+                      <SelectItem key={kategori.title} value={kategori.title}>
                         {kategori.title}
                       </SelectItem>
                     ))}
@@ -215,7 +216,7 @@ export function CreateBerita({
         </div>
         <div className="flex items-center gap-4">
           <Button
-            onClick={() => setIsOpen(false)}
+            onClick={() => setIsCreate(false)}
             variant={"outline"}
             className="max-lg:w-full"
             type="button"
@@ -223,7 +224,7 @@ export function CreateBerita({
             Batal
           </Button>
           <Button className="max-lg:w-full" type="submit">
-            Update
+            Submit
           </Button>
         </div>
       </form>

@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
+  Berita,
   Kategori,
   Kontak,
   Sejarah,
@@ -83,7 +84,6 @@ export const userColumns: ColumnDef<User>[] = [
     id: "actions",
     cell: ({ row }) => {
       const user = row.original;
-      const isSelected = row.getIsSelected();
       const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
       const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
       return (
@@ -175,6 +175,12 @@ export const sejarahColumns: ColumnDef<Sejarah>[] = [
     ),
   },
   {
+    accessorKey: "view",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="View" />
+    ),
+  },
+  {
     id: "actions",
     cell: () => {
       return (
@@ -229,6 +235,12 @@ export const visiMisiColumns: ColumnDef<VisiMisi>[] = [
     accessorKey: "image",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Gambar" />
+    ),
+  },
+  {
+    accessorKey: "view",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="View" />
     ),
   },
   {
@@ -289,6 +301,12 @@ export const tentangHimabColumns: ColumnDef<Tentang>[] = [
     ),
   },
   {
+    accessorKey: "view",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="View" />
+    ),
+  },
+  {
     id: "actions",
     cell: () => {
       return (
@@ -343,6 +361,12 @@ export const kontakColumns: ColumnDef<Kontak>[] = [
     accessorKey: "image",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Gambar" />
+    ),
+  },
+  {
+    accessorKey: "view",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="View" />
     ),
   },
   {
@@ -434,6 +458,96 @@ export const kategoriColumns: ColumnDef<Kategori>[] = [
                 setIsDeleteDialogOpen={setIsDeleteDialogOpen}
               />
             )}
+          </Dialog>
+        </>
+      );
+    },
+  },
+];
+
+export const beritaColumns: ColumnDef<Berita>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "title",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Judul" />
+    ),
+  },
+  {
+    accessorKey: "excerpt",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Kutipan" />
+    ),
+  },
+  {
+    accessorKey: "category",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Kategori" />
+    ),
+  },
+  {
+    accessorKey: "view",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="View" />
+    ),
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const kategori = row.original;
+      const [isEdit, setIsEdit] = useState(false);
+      const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+      return (
+        <>
+          <Dialog
+            open={isDeleteDialogOpen}
+            onOpenChange={setIsDeleteDialogOpen}
+          >
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => setIsDeleteDialogOpen(true)}>
+                  <Trash2 className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                  Hapus
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setIsEdit(true)}>
+                  <Pencil className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                  Edit
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DeleteKategoriDialog
+              id={kategori.id}
+              setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+            />
           </Dialog>
         </>
       );

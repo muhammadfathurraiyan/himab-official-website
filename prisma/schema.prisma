@@ -23,7 +23,7 @@ model Sejarah {
   image   String
   content String?
   userId  String
-  view    Int?
+  view    Int     @default(0)
 }
 
 model VisiMisi {
@@ -33,7 +33,7 @@ model VisiMisi {
   image   String
   content String?
   userId  String
-  view    Int?
+  view    Int     @default(0)
 }
 
 model Tentang {
@@ -43,7 +43,7 @@ model Tentang {
   image   String
   content String?
   userId  String
-  view    Int?
+  view    Int     @default(0)
 }
 
 model Berita {
@@ -55,7 +55,7 @@ model Berita {
   image    String
   content  String?
   userId   String
-  view     Int?
+  view     Int     @default(0)
 }
 
 model Kontak {
@@ -65,7 +65,7 @@ model Kontak {
   image   String
   content String?
   userId  String
-  view    Int?
+  view    Int     @default(0)
 }
 
 model Kategori {

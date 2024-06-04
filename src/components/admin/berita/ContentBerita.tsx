@@ -1,11 +1,17 @@
 "use client";
 import CardInfo from "@/components/global/adminLayout/card/CardInfo";
-import { kontakColumns } from "@/components/global/adminLayout/table/Columns";
+import { beritaColumns } from "@/components/global/adminLayout/table/Columns";
 import { DataTable } from "@/components/global/adminLayout/table/Datatable";
 import { Card, CardHeader } from "@/components/ui/card";
-import { Berita, Kategori, Kontak } from "@prisma/client";
-import { useState } from "react";
+import { Berita, Kategori } from "@prisma/client";
+import { Dispatch, SetStateAction, createContext, useState } from "react";
 import { CreateBerita } from "./CrudBerita";
+
+type TBeritaContext = {
+  setIsEdit: Dispatch<SetStateAction<boolean>>;
+  berita: Berita;
+};
+export const UserIdContext = createContext<TBeritaContext>(null);
 
 export default function ContentBerita({
   userId,
@@ -16,11 +22,14 @@ export default function ContentBerita({
   berita: Berita[];
   kategori: Kategori[];
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isCreate, setIsCreate] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   return (
     <div className="mt-4">
       <div
-        className={`${isOpen ? "hidden" : "flex"} flex-col mt-4 gap-4 w-full`}
+        className={`${
+          isCreate || isEdit ? "hidden" : "flex"
+        } flex-col mt-4 gap-4 w-full`}
       >
         <div>
           <CardInfo
@@ -28,7 +37,7 @@ export default function ContentBerita({
             title="Berita"
             button={{
               title: "Tambah Berita",
-              onClick: () => setIsOpen(!isOpen),
+              onClick: () => setIsCreate(!isCreate),
             }}
           />
         </div>
@@ -40,10 +49,10 @@ export default function ContentBerita({
                   viewOptions: true,
                   header: {
                     isVisible: true,
-                    title: "Tabel data kontak",
+                    title: "Tabel data berita",
                   },
                 }}
-                columns={kontakColumns}
+                columns={beritaColumns}
                 data={berita}
               />
             </CardHeader>
@@ -52,10 +61,17 @@ export default function ContentBerita({
       </div>
       <div
         className={`${
-          isOpen ? "visible opacity-100" : "hidden invisible opacity-0"
+          isCreate || isEdit
+            ? "visible opacity-100"
+            : "hidden invisible opacity-0"
         } transition-all`}
       >
-        <CreateBerita kategori={kategori} isOpen={isOpen} setIsOpen={setIsOpen} />
+        <CreateBerita
+          kategori={kategori}
+          isCreate={isCreate}
+          setIsCreate={setIsCreate}
+          userId={userId}
+        />
       </div>
     </div>
   );

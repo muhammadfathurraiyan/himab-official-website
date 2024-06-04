@@ -22,7 +22,11 @@ export default async function page() {
           </TabsList>
         </div>
         <TabsContent value="berita">
-          <ContentBerita berita={berita} kategori={kategori} userId={session?.user.id} />
+          <ContentBerita
+            berita={berita}
+            kategori={kategori}
+            userId={session?.user.id}
+          />
         </TabsContent>
         <TabsContent value="kategori">
           <ContentKategori userId={session?.user.id} kategori={kategori} />
