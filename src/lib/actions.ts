@@ -5,6 +5,7 @@ import {
   BlogSchema,
   KategoriSchema,
   BeritaSchema,
+  DatabaseSchema,
 } from "./types";
 import prisma from "./db";
 import bcrypt from "bcrypt";
@@ -303,3 +304,90 @@ export async function createBerita(data: unknown) {
 
   revalidatePath("/dashboard/berita");
 }
+
+export async function editBerita(data: unknown, id: string) {
+  const result = BeritaSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.berita.update({
+    data: {
+      title: result.data.title,
+      category: result.data.category,
+      slug: result.data.slug,
+      image: result.data.image,
+      content: result.data.content,
+      excerpt: result.data.excerpt,
+      userId: result.data.userId,
+    },
+    where: {
+      id: id,
+    },
+  });
+
+  revalidatePath("/dashboard/berita");
+}
+
+export const deleteBerita = async (id: string) => {
+  await prisma.berita.delete({ where: { id: id } });
+  revalidatePath("/dashboard/berita");
+};
+
+export async function createDatabase(data: unknown) {
+  const result = DatabaseSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.database.create({
+    data: {
+      name: result.data.name,
+      jabatan: result.data.jabatan,
+      image: result.data.image,
+      tahunMulai: result.data.tahunMulai,
+      tahunSelesai: result.data.tahunSelesai,
+    },
+  });
+
+  revalidatePath("/dashboard/database");
+}
+
+export async function editDatabase(data: unknown, id: string) {
+  const result = DatabaseSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.database.update({
+    data: {
+      name: result.data.name,
+      jabatan: result.data.jabatan,
+      image: result.data.image,
+      tahunMulai: result.data.tahunMulai,
+      tahunSelesai: result.data.tahunSelesai,
+    },
+    where: {
+      id: id,
+    },
+  });
+
+  revalidatePath("/dashboard/database");
+}
+
+export const deleteDatabase = async (id: string) => {
+  await prisma.database.delete({ where: { id: id } });
+  revalidatePath("/dashboard/database");
+};

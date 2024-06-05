@@ -5,13 +5,14 @@ import { DataTable } from "@/components/global/adminLayout/table/Datatable";
 import { Card, CardHeader } from "@/components/ui/card";
 import { Berita, Kategori } from "@prisma/client";
 import { Dispatch, SetStateAction, createContext, useState } from "react";
-import { CreateBerita } from "./CrudBerita";
+import { CreateBerita, EditBerita } from "./CrudBerita";
 
 type TBeritaContext = {
   setIsEdit: Dispatch<SetStateAction<boolean>>;
-  berita: Berita;
-};
-export const UserIdContext = createContext<TBeritaContext>(null);
+  setEditBerita: Dispatch<SetStateAction<Berita | undefined>>;
+} | null;
+
+export const BeritaContext = createContext<TBeritaContext>(null);
 
 export default function ContentBerita({
   userId,
@@ -24,6 +25,7 @@ export default function ContentBerita({
 }) {
   const [isCreate, setIsCreate] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [editBerita, setEditBerita] = useState<Berita>();
   return (
     <div className="mt-4">
       <div
@@ -44,17 +46,19 @@ export default function ContentBerita({
         <div>
           <Card>
             <CardHeader>
-              <DataTable
-                includes={{
-                  viewOptions: true,
-                  header: {
-                    isVisible: true,
-                    title: "Tabel data berita",
-                  },
-                }}
-                columns={beritaColumns}
-                data={berita}
-              />
+              <BeritaContext.Provider value={{ setIsEdit, setEditBerita }}>
+                <DataTable
+                  includes={{
+                    viewOptions: true,
+                    header: {
+                      isVisible: true,
+                      title: "Tabel data berita",
+                    },
+                  }}
+                  columns={beritaColumns}
+                  data={berita}
+                />
+              </BeritaContext.Provider>
             </CardHeader>
           </Card>
         </div>
@@ -71,6 +75,13 @@ export default function ContentBerita({
           isCreate={isCreate}
           setIsCreate={setIsCreate}
           userId={userId}
+        />
+        <EditBerita
+          kategori={kategori}
+          isEdit={isEdit}
+          setIsEdit={setIsEdit}
+          userId={userId}
+          berita={editBerita}
         />
       </div>
     </div>

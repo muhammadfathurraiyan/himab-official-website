@@ -73,3 +73,12 @@ model Kategori {
   title  String
   userId String
 }
+
+model Database {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  tahunMulai   String
+  tahunSelesai String
+  jabatan      String
+  image        String
+}

@@ -84,3 +84,14 @@ export const BeritaSchema = z.object({
   content: z.string().optional(),
   userId: z.string().min(1, { message: "Ada kesalahan!." }),
 });
+
+export const DatabaseSchema = z.object({
+  name: z
+    .string()
+    .min(1, { message: "Nama harus lebih dari 1 karakter." })
+    .max(50, { message: "Nama terlalu panjang." }),
+  image: z.string().min(12, { message: "Link gambar tidak valid." }),
+  jabatan: z.string().min(1, { message: "Jabatan harus dipilih." }),
+  tahunMulai: z.string().min(1, { message: "Jabatan harus dipilih." }),
+  tahunSelesai: z.string().min(1, { message: "Jabatan harus dipilih." }),
+});
