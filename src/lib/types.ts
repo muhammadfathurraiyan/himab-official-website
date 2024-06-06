@@ -95,3 +95,12 @@ export const DatabaseSchema = z.object({
   tahunMulai: z.string().min(1, { message: "Jabatan harus dipilih." }),
   tahunSelesai: z.string().min(1, { message: "Jabatan harus dipilih." }),
 });
+
+export const StrukturOrganisasiSchema = z.object({
+  name: z
+    .string()
+    .min(1, { message: "Nama harus lebih dari 1 karakter." })
+    .max(50, { message: "Nama terlalu panjang." }),
+  jabatan: z.string().min(1, { message: "Jabatan harus dipilih." }),
+  image: z.string().min(12, { message: "Link gambar tidak valid." }),
+});

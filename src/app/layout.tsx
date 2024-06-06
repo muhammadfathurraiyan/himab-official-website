@@ -3,7 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { ThemeProvider } from "@/components/provider/ThemeProvider";
-import Header from "@/components/global/header/Header";
+import Header from "@/components/global/clientLayout/header/Header";
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id">
+    <html lang="id" suppressHydrationWarning>
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} min-h-screen bg-background text-foreground antialiased font-sans`}
       >
@@ -29,7 +29,6 @@ export default function RootLayout({
         >
           <Header />
           {children}
-
           <Toaster />
         </ThemeProvider>
       </body>

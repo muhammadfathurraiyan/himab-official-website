@@ -33,35 +33,31 @@ export default function ContentBerita({
           isCreate || isEdit ? "hidden" : "flex"
         } flex-col mt-4 gap-4 w-full`}
       >
-        <div>
-          <CardInfo
-            description="Jika anda ingin melakukan pengeditan halaman berita, klik tombol di bawah untuk melakukan pengeditan tentang berita."
-            title="Berita"
-            button={{
-              title: "Tambah Berita",
-              onClick: () => setIsCreate(!isCreate),
-            }}
-          />
-        </div>
-        <div>
-          <Card>
-            <CardHeader>
-              <BeritaContext.Provider value={{ setIsEdit, setEditBerita }}>
-                <DataTable
-                  includes={{
-                    viewOptions: true,
-                    header: {
-                      isVisible: true,
-                      title: "Tabel data berita",
-                    },
-                  }}
-                  columns={beritaColumns}
-                  data={berita}
-                />
-              </BeritaContext.Provider>
-            </CardHeader>
-          </Card>
-        </div>
+        <CardInfo
+          description="Jika anda ingin melakukan pengeditan halaman berita, klik tombol di bawah untuk melakukan pengeditan tentang berita."
+          title="Berita"
+          button={{
+            title: "Tambah Berita",
+            onClick: () => setIsCreate(!isCreate),
+          }}
+        />
+        <Card>
+          <CardHeader>
+            <BeritaContext.Provider value={{ setIsEdit, setEditBerita }}>
+              <DataTable
+                includes={{
+                  viewOptions: true,
+                  header: {
+                    isVisible: true,
+                    title: "Tabel data berita",
+                  },
+                }}
+                columns={beritaColumns}
+                data={berita}
+              />
+            </BeritaContext.Provider>
+          </CardHeader>
+        </Card>
       </div>
       <div
         className={`${

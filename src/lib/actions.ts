@@ -6,6 +6,7 @@ import {
   KategoriSchema,
   BeritaSchema,
   DatabaseSchema,
+  StrukturOrganisasiSchema,
 } from "./types";
 import prisma from "./db";
 import bcrypt from "bcrypt";
@@ -390,4 +391,54 @@ export async function editDatabase(data: unknown, id: string) {
 export const deleteDatabase = async (id: string) => {
   await prisma.database.delete({ where: { id: id } });
   revalidatePath("/dashboard/database");
+};
+
+export async function createStrukturOrganisasi(data: unknown) {
+  const result = StrukturOrganisasiSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.strukturOrganisasi.create({
+    data: {
+      name: result.data.name,
+      jabatan: result.data.jabatan,
+      image: result.data.image,
+    },
+  });
+
+  revalidatePath("/dashboard/profil");
+}
+
+export async function editStriktukrOrganisasi(data: unknown, id: string) {
+  const result = StrukturOrganisasiSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.strukturOrganisasi.update({
+    data: {
+      name: result.data.name,
+      jabatan: result.data.jabatan,
+      image: result.data.image,
+    },
+    where: {
+      id: id,
+    },
+  });
+
+  revalidatePath("/dashboard/profil");
+}
+
+export const deleteStrukturOrganisasi = async (id: string) => {
+  await prisma.strukturOrganisasi.delete({ where: { id: id } });
+  revalidatePath("/dashboard/profil");
 };

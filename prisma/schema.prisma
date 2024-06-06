@@ -82,3 +82,10 @@ model Database {
   jabatan      String
   image        String
 }
+
+model StrukturOrganisasi {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  jabatan      String
+  image        String
+}
