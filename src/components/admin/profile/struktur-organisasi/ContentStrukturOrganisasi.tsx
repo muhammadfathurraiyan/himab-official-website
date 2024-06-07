@@ -7,7 +7,7 @@ import { StrukturOrganisasi } from "@prisma/client";
 import { useState } from "react";
 import { CreateStrukturOrganisasi } from "./CrudStrukturOrganisasi";
 
-export default function ContentStrukturOrganisasi({
+export default function ContentStrukturOrganisasi({   
   strukturOrganisasi,
 }: {
   strukturOrganisasi: StrukturOrganisasi[];
