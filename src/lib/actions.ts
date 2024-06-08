@@ -7,6 +7,7 @@ import {
   BeritaSchema,
   DatabaseSchema,
   StrukturOrganisasiSchema,
+  AsramaMahasiswaSchema,
 } from "./types";
 import prisma from "./db";
 import bcrypt from "bcrypt";
@@ -442,3 +443,27 @@ export const deleteStrukturOrganisasi = async (id: string) => {
   await prisma.strukturOrganisasi.delete({ where: { id: id } });
   revalidatePath("/dashboard/profil");
 };
+
+export async function editAsramaMahasiswa(data: unknown, id: string) {
+  const result = AsramaMahasiswaSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.asrama.update({
+    data: {
+      title: result.data.title,
+      image: result.data.image,
+      data: result.data.data,
+    },
+    where: {
+      id: id,
+    },
+  });
+
+  revalidatePath("/dashboard/profil");
+}

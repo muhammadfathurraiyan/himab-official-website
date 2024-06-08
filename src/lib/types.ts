@@ -104,3 +104,21 @@ export const StrukturOrganisasiSchema = z.object({
   jabatan: z.string().min(1, { message: "Jabatan harus dipilih." }),
   image: z.string().min(12, { message: "Link gambar tidak valid." }),
 });
+
+export const AsramaMahasiswaSchema = z.object({
+  title: z
+    .string()
+    .min(1, { message: "Judul harus lebih dari 1 karakter." })
+    .max(50, { message: "Judul terlalu panjang." }),
+  image: z.string().min(12, { message: "Link gambar tidak valid." }),
+  data: z.array(
+    z.object({
+      ruang: z
+        .string()
+        .min(1, { message: "Nama ruang harus lebih dari 1 karakter." })
+        .max(50, { message: "Nama ruang terlalu panjang." }),
+      image: z.string().min(12, { message: "Link gambar tidak valid." }),
+      description: z.string(),
+    })
+  ),
+});

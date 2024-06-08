@@ -4,7 +4,7 @@ import CustomEditor from "@/components/global/adminLayout/editor/CustomEditor";
 import { sejarahColumns } from "@/components/global/adminLayout/table/Columns";
 import { DataTable } from "@/components/global/adminLayout/table/Datatable";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader } from "@/components/ui/card";
 import {
   Form,
   FormControl,

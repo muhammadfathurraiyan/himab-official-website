@@ -91,7 +91,8 @@ model StrukturOrganisasi {
 }
 
 model Asrama {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
-  namaAsrama String
-  data       Json?
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  image String
+  data  Json?
 }
