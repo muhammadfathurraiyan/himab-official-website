@@ -458,6 +458,7 @@ export async function editAsramaMahasiswa(data: unknown, id: string) {
     data: {
       title: result.data.title,
       image: result.data.image,
+      description: result.data.description,
       data: result.data.data,
     },
     where: {

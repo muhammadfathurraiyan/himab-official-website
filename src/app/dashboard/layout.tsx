@@ -9,9 +9,9 @@ export default async function AdminLayout({
 }) {
   const session = await auth();
   return (
-    <main className="grid grid-cols-5 min-h-screen w-full">
+    <main className="grid grid-cols-9 min-h-screen w-full">
       <Sidebar />
-      <div className="col-span-4 max-lg:col-span-5">
+      <div className="col-span-7 max-lg:col-span-9">
         <Header />
         <section className="p-4">{children}</section>
       </div>

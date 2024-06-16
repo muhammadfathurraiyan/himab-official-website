@@ -63,7 +63,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden border-r bg-muted/40 lg:block">
+    <aside className="hidden border-r bg-muted/40 lg:block lg:col-span-2">
       <div className="flex h-full max-h-screen flex-col gap-4">
         <div className="flex items-center border-b h-[60px] px-6">
           <Link href="/" className="flex items-center gap-2 font-semibold">
@@ -74,7 +74,7 @@ export function Sidebar() {
               height={1080}
               className="size-10"
             />
-            <h1 className="mt-1 font-bold leading-none">
+            <h1 className="mt-1 font-bold leading-none uppercase">
               Himpunan Mahasiswa <br /> Aceh Besar
             </h1>
           </Link>

@@ -1,5 +1,7 @@
 "use client";
 import CardInfo from "@/components/global/adminLayout/card/CardInfo";
+import { asramaColumns } from "@/components/global/adminLayout/table/Columns";
+import { DataTable } from "@/components/global/adminLayout/table/Datatable";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,29 +21,32 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/use-toast";
+import { editAsramaMahasiswa } from "@/lib/actions";
 import { AsramaMahasiswaSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Asrama } from "@prisma/client";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 
 type AsramaMahasiswaForm = z.infer<typeof AsramaMahasiswaSchema>;
 
-export default function ContentAsramaMahasiswa() {
+export default function ContentAsramaMahasiswa({
+  asrama,
+}: {
+  asrama: Asrama | null;
+}) {
+  if (!asrama) return <></>;
   const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm<AsramaMahasiswaForm>({
     resolver: zodResolver(AsramaMahasiswaSchema),
     defaultValues: {
-      title: "",
-      image: "",
-      data: [
-        {
-          ruang: "",
-          image: "",
-          description: "",
-        },
-      ],
+      title: asrama.title,
+      image: asrama.image,
+      description: asrama.description,
+      data: asrama.data,
     },
   });
 
@@ -52,27 +57,29 @@ export default function ContentAsramaMahasiswa() {
   });
 
   const save = async (data: AsramaMahasiswaForm) => {
-    const dataSejarah = {
+    const dataAsrama = {
       title: data.title,
+      image: data.image,
+      description: data.description,
       data: data.data,
     };
 
-    // const result = await editSejarah(dataSejarah, sejarah.id);
+    const result = await editAsramaMahasiswa(dataAsrama, asrama.id);
 
-    // if (result?.error) {
-    //   toast({
-    //     title: "Error!",
-    //     description: `Terdapat kesalahan silahkan refresh halaman dan coba lagi.\n ${result.error}`,
-    //     variant: "destructive",
-    //   });
-    // } else {
-    //   setIsOpen(false);
-    //   toast({
-    //     title: "Berhasil di input",
-    //     description:
-    //       "Sejarah berhasil di update, silahkan cek pada tabel data sejarah.",
-    //   });
-    // }
+    if (result?.error) {
+      toast({
+        title: "Error!",
+        description: `Terdapat kesalahan silahkan refresh halaman dan coba lagi.\n ${result.error}`,
+        variant: "destructive",
+      });
+    } else {
+      setIsOpen(false);
+      toast({
+        title: "Berhasil di input",
+        description:
+          "Asrama mahasiswa berhasil di update, silahkan cek pada tabel data asrama mahasiswa.",
+      });
+    }
   };
 
   return (
@@ -82,10 +89,10 @@ export default function ContentAsramaMahasiswa() {
       >
         <div>
           <CardInfo
-            description="Jika anda ingin melakukan pengeditan halaman sejarah, klik tombol di bawah untuk melakukan pengeditan tentang sejarah."
-            title="Sejarah"
+            description="Jika anda ingin melakukan pengeditan halaman asrama mahasiswa, klik tombol di bawah untuk melakukan pengeditan tentang asrama mahasiswa."
+            title="Asrama Mahasiswa"
             button={{
-              title: "Edit Sejarah",
+              title: "Edit Asrama Mahaswiswa",
               onClick: () => setIsOpen(!isOpen),
             }}
           />
@@ -93,17 +100,17 @@ export default function ContentAsramaMahasiswa() {
         <div>
           <Card>
             <CardHeader>
-              {/* <DataTable
+              <DataTable
                 includes={{
                   viewOptions: true,
                   header: {
                     isVisible: true,
-                    title: "Tabel data sejarah",
+                    title: "Tabel data asrama mahasiswa",
                   },
                 }}
-                columns={sejarahColumns}
-                data={[sejarah]}
-              /> */}
+                columns={asramaColumns}
+                data={[asrama]}
+              />
             </CardHeader>
           </Card>
         </div>
@@ -119,9 +126,9 @@ export default function ContentAsramaMahasiswa() {
             className="border p-4 rounded-lg space-y-4"
           >
             <div>
-              <h2 className="font-bold text-xl">Form Sejarah</h2>
+              <h2 className="font-bold text-xl">Form Asrama Mahasiswa</h2>
               <p className="text-sm text-muted-foreground">
-                Silahkan mengubah form dibawah untuk mengedit sejarah
+                Silahkan mengubah form dibawah untuk mengedit Asrama Mahasiswa
               </p>
             </div>
             <div className="flex flex-col gap-2">
@@ -134,7 +141,7 @@ export default function ContentAsramaMahasiswa() {
                     <FormControl>
                       <Input
                         className="lg:w-[400px]"
-                        placeholder="Sejarah"
+                        placeholder="Asrama Mahasiswa"
                         {...field}
                       />
                     </FormControl>
@@ -152,6 +159,23 @@ export default function ContentAsramaMahasiswa() {
                       <Input
                         className="lg:w-[400px]"
                         placeholder="https://placehold.co/150x150"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Deskripsi</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Deskripsi"
+                        className="resize-none"
                         {...field}
                       />
                     </FormControl>

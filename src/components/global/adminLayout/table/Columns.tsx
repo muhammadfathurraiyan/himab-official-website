@@ -29,6 +29,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
+  Asrama,
   Berita,
   Database,
   Kategori,
@@ -756,6 +757,69 @@ export const strukturOrganisasiColumns: ColumnDef<StrukturOrganisasi>[] = [
             )}
           </Dialog>
         </>
+      );
+    },
+  },
+];
+
+export const asramaColumns: ColumnDef<Asrama>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+        className="mt-1"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "title",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Judul" />
+    ),
+  },
+  {
+    accessorKey: "description",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Deskripsi" />
+    ),
+  },
+  {
+    accessorKey: "image",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Gambar" />
+    ),
+  },
+  {
+    accessorKey: "view",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="View" />
+    ),
+  },
+  {
+    id: "actions",
+    cell: () => {
+      return (
+        <Link
+          href={"/asrama-mahasiswa"}
+          className={buttonVariants({ variant: "ghost", size: "icon" })}
+        >
+          <Eye className="size-5" />
+        </Link>
       );
     },
   },

@@ -111,6 +111,7 @@ export const AsramaMahasiswaSchema = z.object({
     .min(1, { message: "Judul harus lebih dari 1 karakter." })
     .max(50, { message: "Judul terlalu panjang." }),
   image: z.string().min(12, { message: "Link gambar tidak valid." }),
+  description: z.string().min(1, { message: "Deskripsi harus diisi." }),
   data: z.array(
     z.object({
       ruang: z
@@ -118,7 +119,7 @@ export const AsramaMahasiswaSchema = z.object({
         .min(1, { message: "Nama ruang harus lebih dari 1 karakter." })
         .max(50, { message: "Nama ruang terlalu panjang." }),
       image: z.string().min(12, { message: "Link gambar tidak valid." }),
-      description: z.string(),
+      description: z.string().min(1, { message: "Deskripsi harus diisi." }),
     })
   ),
 });

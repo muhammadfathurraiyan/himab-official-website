@@ -112,9 +112,9 @@ export default function Header() {
                 alt="logo himab"
                 width={1080}
                 height={1080}
-                className="size-14"
+                className="size-10"
               />
-              <h1 className="font-bold leading-none text-start">
+              <h1 className="font-bold leading-none text-start uppercase">
                 Himpunan Mahasiswa <br /> Aceh Besar
               </h1>
             </Link>

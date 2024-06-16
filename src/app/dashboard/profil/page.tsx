@@ -13,6 +13,22 @@ export default async function page() {
   const visiMisi = await prisma.visiMisi.findFirst();
   const tentang = await prisma.tentang.findFirst();
   const strukturOrganisasi = await prisma.strukturOrganisasi.findMany();
+  const asrama = await prisma.asrama.findFirst();
+
+  // await prisma.asrama.create({
+  //   data: {
+  //     title: "Asrama Mahasiswa",
+  //     image: "https://placehold.co/800x400",
+  //     description: "Ini adalah deskripsi",
+  //     data: [
+  //       {
+  //         ruang: "Kamar",
+  //         image: "https://placehold.co/800x400",
+  //         description: "Ini adalah deskripsi",
+  //       },
+  //     ],
+  //   },
+  // });
 
   return (
     <>
@@ -45,7 +61,7 @@ export default async function page() {
           <ContentStrukturOrganisasi strukturOrganisasi={strukturOrganisasi} />
         </TabsContent>
         <TabsContent value="asrama-mahasiswa">
-          <ContentAsramaMahasiswa />
+          <ContentAsramaMahasiswa asrama={asrama} />
         </TabsContent>
       </Tabs>
     </>
