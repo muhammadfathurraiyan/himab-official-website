@@ -31,6 +31,16 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 
 type AsramaMahasiswaForm = z.infer<typeof AsramaMahasiswaSchema>;
+type TData =
+  | (
+      | {
+          image?: string | undefined;
+          description?: string | undefined;
+          ruang?: string | undefined;
+        }
+      | undefined
+    )[]
+  | undefined;
 
 export default function ContentAsramaMahasiswa({
   asrama,
@@ -46,7 +56,7 @@ export default function ContentAsramaMahasiswa({
       title: asrama.title,
       image: asrama.image,
       description: asrama.description,
-      data: asrama.data,
+      data: asrama.data as TData,
     },
   });
 
