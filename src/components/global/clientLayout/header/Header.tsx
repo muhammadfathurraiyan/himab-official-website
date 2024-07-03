@@ -5,8 +5,11 @@ import Link from "next/link";
 import Whatsapp from "../../../icon/Whatsapp";
 import { ThemeToggle } from "../../ThemeToggle";
 import { usePathname } from "next/navigation";
+import { Navbar } from "./Navbar";
+import { Kategori } from "@prisma/client";
+import { Sidebar } from "./Sidebar";
 
-export default function Header() {
+export default function Header({ categories }: { categories: Kategori[] }) {
   const pathname = usePathname();
   return (
     <header
@@ -28,8 +31,8 @@ export default function Header() {
           Himpunan Mahasiswa <br /> Aceh Besar
         </h1>
       </Link>
-      <nav></nav>
-      <div className="flex items-center gap-4">
+      <Navbar categories={categories} />
+      <div className="flex items-center gap-4 max-lg:hidden">
         <Link href={"/"} className="hover:text-primary transition-colors">
           <Whatsapp />
         </Link>
@@ -38,6 +41,7 @@ export default function Header() {
         </Link>
         <ThemeToggle />
       </div>
+      <Sidebar />
     </header>
   );
 }

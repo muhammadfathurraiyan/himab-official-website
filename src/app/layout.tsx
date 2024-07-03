@@ -5,17 +5,19 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/provider/ThemeProvider";
 import Header from "@/components/global/clientLayout/header/Header";
 import { Toaster } from "@/components/ui/toaster";
+import prisma from "@/lib/db";
 
 export const metadata: Metadata = {
   title: "Himpunan Mahasiswa Aceh Besar",
   description: "Situs Web Resmi Himpunan Mahasiswa Aceh Besar",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const categories = await prisma.kategori.findMany();
   return (
     <html lang="id" suppressHydrationWarning={true}>
       <body
@@ -27,7 +29,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
+          <Header categories={categories} />
           {children}
           <Toaster />
         </ThemeProvider>
