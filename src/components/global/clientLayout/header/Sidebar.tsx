@@ -28,37 +28,38 @@ const superAdminPages = [
   {
     name: "Beranda",
     url: "/",
-    icon: <Home size={20} />,
   },
   {
-    name: "Profile",
-    url: "/dashboard/profil",
-    icon: <BookOpenCheck size={20} />,
+    name: "Profil",
+    url: "/profil",
+  },
+  {
+    name: "Visi-Misi",
+    url: "/profil/visi-misi",
+  },
+  {
+    name: "Struktur Organisasi",
+    url: "/profil/struktur-organisasi",
+  },
+  {
+    name: "Sejarah",
+    url: "/profil/sejarah",
   },
   {
     name: "Berita",
-    url: "/dashboard/berita",
-    icon: <Newspaper size={20} />,
+    url: "/berita",
   },
   {
     name: "Database",
-    url: "/dashboard/database",
-    icon: <Database size={20} />,
+    url: "/database",
   },
   {
     name: "Layanan",
-    url: "/dashboard/layanan",
-    icon: <HandHelping size={20} />,
+    url: "/layanan",
   },
   {
     name: "Kontak",
-    url: "/dashboard/kontak",
-    icon: <Headset size={20} />,
-  },
-  {
-    name: "Manajemen Admin",
-    url: "/dashboard/manajemen-admin",
-    icon: <UserRoundPlus size={20} />,
+    url: "/kontak",
   },
 ];
 
@@ -89,29 +90,16 @@ export function Sidebar() {
             </h1>
           </Link>
         </SheetHeader>
-        <nav className="grid items-start text-sm font-medium">
+        <nav className="grid items-start gap-2 text-sm">
           {superAdminPages.map((data) => (
             <Link
               key={data.name}
               href={data.url}
-              className={`${
-                pathname === data.url
-                  ? "bg-muted text-primary"
-                  : "text-muted-foreground"
-              } flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary`}
+              className={`transition-all hover:text-primary`}
             >
-              {data.icon}
               {data.name}
             </Link>
           ))}
-          <button
-            disabled
-            className={`text-muted flex items-center gap-3 rounded-lg px-3 py-2 transition-all`}
-          >
-            <CalendarPlus />
-            Event
-            <Badge className="hover:bg-primary ml-auto">Segera Hadir</Badge>
-          </button>
         </nav>
       </SheetContent>
     </Sheet>

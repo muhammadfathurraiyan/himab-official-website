@@ -86,10 +86,10 @@ export function Navbar({ categories }: { categories: Kategori[] }) {
               <li className="col-span-2">
                 <NavigationMenuLink asChild>
                   <Link
-                    className="flex items-center gap-2 h-full w-full rounded-md bg-gradient-to-b from-muted/50 to-muted p-3 focus:shadow-md"
+                    className="flex items-center gap-4 h-full w-full rounded-md bg-gradient-to-b from-muted/50 to-muted p-3 focus:shadow-md"
                     href="/berita"
                   >
-                    <Newspaper size={38} />
+                    <Newspaper size={64} />
                     <div className="">
                       <h1 className="text-lg font-medium">Berita</h1>
                       <p className="text-sm leading-tight text-muted-foreground">
