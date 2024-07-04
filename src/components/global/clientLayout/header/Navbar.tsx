@@ -93,7 +93,7 @@ export function Navbar({ categories }: { categories: Kategori[] }) {
                     <div className="">
                       <h1 className="text-lg font-medium">Berita</h1>
                       <p className="text-sm leading-tight text-muted-foreground">
-                        Lihat semua berita yang sudah pernah diupload.
+                        Lihat semua berita yang terbaru atau sudah pernah diupload.
                       </p>
                     </div>
                   </Link>

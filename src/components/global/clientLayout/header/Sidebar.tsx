@@ -1,6 +1,5 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -9,22 +8,14 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import {
-  BookOpenCheck,
-  CalendarPlus,
-  Database,
-  HandHelping,
-  Headset,
-  Home,
-  Menu,
-  Newspaper,
-  UserRoundPlus,
+  Menu
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-const superAdminPages = [
+const navLink = [
   {
     name: "Beranda",
     url: "/",
@@ -91,7 +82,7 @@ export function Sidebar() {
           </Link>
         </SheetHeader>
         <nav className="grid items-start gap-2 text-sm">
-          {superAdminPages.map((data) => (
+          {navLink.map((data) => (
             <Link
               key={data.name}
               href={data.url}
