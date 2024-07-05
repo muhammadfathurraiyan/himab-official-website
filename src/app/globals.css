@@ -4,6 +4,9 @@
 
 @layer base {
   :root {
+    --backgroundAbsolute: 0 0% 100%;
+    --foregroundAbsolute: 222.2 84% 4.9%;
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -13,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 221.2 83.2% 53.3%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -45,8 +48,8 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -71,19 +74,19 @@
     @apply border-border;
   }
   /* width */
-  ::-webkit-scrollbar {
+  /* ::-webkit-scrollbar {
     @apply size-2;
-  }
+  } */
 
   /* Track */
-  ::-webkit-scrollbar-track {
+  /* ::-webkit-scrollbar-track {
     @apply bg-secondary;
-  }
+  } */
 
   /* Handle */
-  ::-webkit-scrollbar-thumb {
+  /* ::-webkit-scrollbar-thumb {
     @apply bg-foreground/60 rounded-full;
-  }
+  } */
 
   .editor h1 {
     @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
