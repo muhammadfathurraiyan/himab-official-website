@@ -31,7 +31,7 @@ const slider = [
 
 export function Herosection() {
   return (
-    <section className="min-h-screen px-12 pt-8 max-lg:px-4 space-y-4">
+    <section className="px-12 pt-8 max-lg:px-4 space-y-4">
       <h1 className="text-5xl font-bold ">Himpunan Mahasiswa Aceh Besar</h1>
       <Carousel opts={{ loop: true }} plugins={[Fade(), Autoplay()]}>
         <CarouselContent>
@@ -40,9 +40,9 @@ export function Herosection() {
               <div className="w-full h-[75vh] relative bg-foregroundAbsolute/50  rounded-3xl">
                 <div className="pl-20 max-lg:px-4 py-12 lg:w-2/3 h-full flex flex-col justify-between">
                   <div className="space-y-4 h-fit">
-                    <h1 className="text-4xl font-bold text-backgroundAbsolute">
+                    <h2 className="text-5xl font-bold text-backgroundAbsolute">
                       {slide.title}
-                    </h1>
+                    </h2>
                     <p className="text-backgroundAbsolute max-lg:line-clamp-3">
                       {slide.desc}
                     </p>
