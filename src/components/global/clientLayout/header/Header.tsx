@@ -17,7 +17,7 @@ export default function Header({ categories }: { categories: Kategori[] }) {
         pathname.startsWith("/dashboard") || pathname === "/auth"
           ? "hidden"
           : ""
-      } py-4 px-12 max-lg:px-4 flex items-center justify-between sticky top-0 inset-x-0 z-10 bg-background`}
+      } py-4 px-12 max-lg:px-4 mb-8 flex items-center justify-between sticky top-0 inset-x-0 z-10 bg-background`}
     >
       <Link href={"/"} className="flex items-center gap-2">
         <Image

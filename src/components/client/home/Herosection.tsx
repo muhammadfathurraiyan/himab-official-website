@@ -31,19 +31,19 @@ const slider = [
 
 export function Herosection() {
   return (
-    <section className="px-12 pt-8 max-lg:px-4 space-y-4">
+    <section className="px-12 max-lg:px-4 space-y-4">
       <h1 className="text-5xl font-bold ">Himpunan Mahasiswa Aceh Besar</h1>
       <Carousel opts={{ loop: true }} plugins={[Fade(), Autoplay()]}>
         <CarouselContent>
           {slider.map((slide) => (
             <CarouselItem key={slide.id}>
-              <div className="w-full h-[75vh] relative bg-foregroundAbsolute/50  rounded-3xl">
-                <div className="pl-20 max-lg:px-4 py-12 lg:w-2/3 h-full flex flex-col justify-between">
+              <div className="w-full h-[75vh] relative bg-foregroundAbsolute/30  rounded-3xl">
+                <div className="px-12 max-lg:px-4 py-12 lg:w-2/3 h-full flex flex-col justify-between">
                   <div className="space-y-4 h-fit">
                     <h2 className="text-5xl font-bold text-backgroundAbsolute">
                       {slide.title}
                     </h2>
-                    <p className="text-backgroundAbsolute max-lg:line-clamp-3">
+                    <p className="text-backgroundAbsolute/70 text-lg line-clamp-3">
                       {slide.desc}
                     </p>
                     <Link
