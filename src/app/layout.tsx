@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/provider/ThemeProvider";
 import Header from "@/components/global/clientLayout/header/Header";
 import { Toaster } from "@/components/ui/toaster";
 import prisma from "@/lib/db";
+import Footer from "@/components/global/clientLayout/footer/Footer";
 
 export const metadata: Metadata = {
   title: "Himpunan Mahasiswa Aceh Besar",
@@ -31,6 +32,7 @@ export default async function RootLayout({
         >
           <Header categories={categories} />
           {children}
+          <Footer />
           <Toaster />
         </ThemeProvider>
       </body>

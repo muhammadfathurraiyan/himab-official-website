@@ -1,5 +1,7 @@
 import { Herosection } from "@/components/client/home/Herosection";
+import Kontak from "@/components/client/home/Kontak";
 import LatestNews from "@/components/client/home/LatestNews";
+import Others from "@/components/client/home/Others";
 import Profile from "@/components/client/home/Profile";
 import Quotes from "@/components/client/home/Quotes";
 import Image from "next/image";
@@ -12,6 +14,8 @@ export default async function page() {
       <LatestNews />
       <Quotes />
       <Profile />
+      <Others />
+      <Kontak />
     </main>
   );
 }

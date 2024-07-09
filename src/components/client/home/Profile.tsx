@@ -9,7 +9,7 @@ export default function Profile() {
           Profil pimpinan Himpunan Mahasiswa Aceh Besar Periode 2024
         </p>
       </div>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-4 max-lg:grid-cols-2 gap-4">
         <div className="bg-purple-500 h-[70vh] rounded-3xl">1</div>
         <div className="bg-green-500 h-[70vh] rounded-3xl">2</div>
         <div className="bg-yellow-500 h-[70vh] rounded-3xl">3</div>
