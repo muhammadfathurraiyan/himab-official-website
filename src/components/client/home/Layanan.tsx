@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export default function Kontak() {
+export default function Layanan() {
   return (
     <section className="h-[50vh] mx-12 max-lg:mx-4 relative">
       <Image
@@ -16,7 +16,7 @@ export default function Kontak() {
       <div className="bg-foregroundAbsolute/40 size-full px-12 max-lg:px-4 flex items-center justify-end rounded-3xl">
         <div className="w-3/4 space-y-4">
           <h1 className="font-bold text-5xl text-backgroundAbsolute">
-            Silahkan klik tombol dibawah untuk informasi layanan pengaduan
+            Untuk informasi layanan pengaduan, silahkan klik tombol dibawah.
           </h1>
           <Link
             className={buttonVariants({

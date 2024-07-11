@@ -122,7 +122,6 @@ export const editAccount = async (data: unknown, id: string) => {
 export async function loginAction(data: FormData) {
   try {
     await signIn("credentials", data);
-    redirect("/dashboard");
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

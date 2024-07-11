@@ -1,11 +1,9 @@
 import { Herosection } from "@/components/client/home/Herosection";
-import Kontak from "@/components/client/home/Kontak";
 import LatestNews from "@/components/client/home/LatestNews";
+import Layanan from "@/components/client/home/Layanan";
 import Others from "@/components/client/home/Others";
 import Profile from "@/components/client/home/Profile";
 import Quotes from "@/components/client/home/Quotes";
-import Image from "next/image";
-import React from "react";
 
 export default async function page() {
   return (
@@ -15,7 +13,7 @@ export default async function page() {
       <Quotes />
       <Profile />
       <Others />
-      <Kontak />
+      <Layanan />
     </main>
   );
 }
