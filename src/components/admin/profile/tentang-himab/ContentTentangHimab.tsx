@@ -26,10 +26,8 @@ import { z } from "zod";
 type TentangHimabForm = z.infer<typeof BlogSchema>;
 
 export default function ContentTentangHimab({
-  userId,
   tentang,
 }: {
-  userId?: string;
   tentang: Tentang | null;
 }) {
   if (!tentang) return <></>;
@@ -43,7 +41,6 @@ export default function ContentTentangHimab({
       image: tentang.image,
       content: tentang.content ?? "",
       excerpt: tentang.excerpt ?? "",
-      userId: userId,
     },
   });
 
@@ -53,7 +50,6 @@ export default function ContentTentangHimab({
       image: data.image,
       excerpt: content?.slice(0, 50).replace(/(<([^>]+)>)/gi, ""),
       content: content,
-      userId: data.userId,
     };
 
     const result = await editTentangHimab(dataTentangHimab, tentang.id);

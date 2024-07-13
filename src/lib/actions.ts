@@ -155,7 +155,6 @@ export async function editSejarah(data: unknown, id: string) {
       image: result.data.image,
       excerpt: result.data.excerpt,
       content: result.data.content,
-      userId: result.data.userId,
     },
     where: { id: id },
   });
@@ -179,7 +178,6 @@ export async function editVisiMisi(data: unknown, id: string) {
       image: result.data.image,
       excerpt: result.data.excerpt,
       content: result.data.content,
-      userId: result.data.userId,
     },
     where: { id: id },
   });
@@ -203,7 +201,6 @@ export async function editTentangHimab(data: unknown, id: string) {
       image: result.data.image,
       excerpt: result.data.excerpt,
       content: result.data.content,
-      userId: result.data.userId,
     },
     where: { id: id },
   });
@@ -227,7 +224,6 @@ export async function editKontak(data: unknown, id: string) {
       image: result.data.image,
       excerpt: result.data.excerpt,
       content: result.data.content,
-      userId: result.data.userId,
     },
     where: { id: id },
   });

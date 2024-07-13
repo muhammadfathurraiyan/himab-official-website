@@ -64,7 +64,6 @@ model Kontak {
   excerpt String?
   image   String
   content String?
-  userId  String
   view    Int     @default(0)
 }
 

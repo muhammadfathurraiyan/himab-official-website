@@ -58,7 +58,6 @@ export const BlogSchema = z.object({
   image: z.string().min(12, { message: "Link gambar tidak valid." }),
   excerpt: z.string().optional(),
   content: z.string().optional(),
-  userId: z.string().min(1, { message: "Ada kesalahan!." }),
 });
 
 export const KategoriSchema = z.object({

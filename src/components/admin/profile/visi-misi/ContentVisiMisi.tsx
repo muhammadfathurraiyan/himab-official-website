@@ -26,10 +26,8 @@ import { z } from "zod";
 type VisiMisiForm = z.infer<typeof BlogSchema>;
 
 export default function ContentVisiMisi({
-  userId,
   visiMisi,
 }: {
-  userId?: string;
   visiMisi: VisiMisi | null;
 }) {
   if (!visiMisi) return <></>;
@@ -43,7 +41,6 @@ export default function ContentVisiMisi({
       image: visiMisi.image,
       content: visiMisi.content ?? "",
       excerpt: visiMisi.excerpt ?? "",
-      userId: userId,
     },
   });
 
@@ -53,7 +50,6 @@ export default function ContentVisiMisi({
       image: data.image,
       excerpt: content?.slice(0, 50).replace(/(<([^>]+)>)/gi, ""),
       content: content,
-      userId: data.userId,
     };
 
     const result = await editVisiMisi(dataVisiMisi, visiMisi.id);

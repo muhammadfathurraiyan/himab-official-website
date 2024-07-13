@@ -26,10 +26,8 @@ import { z } from "zod";
 type SejarahForm = z.infer<typeof BlogSchema>;
 
 export default function ContentSejarah({
-  userId,
   sejarah,
 }: {
-  userId?: string;
   sejarah: Sejarah | null;
 }) {
   if (!sejarah) return <></>;
@@ -43,7 +41,6 @@ export default function ContentSejarah({
       image: sejarah.image,
       content: sejarah.content ?? "",
       excerpt: sejarah.excerpt ?? "",
-      userId: userId,
     },
   });
 
@@ -53,7 +50,6 @@ export default function ContentSejarah({
       image: data.image,
       excerpt: content?.slice(0, 50).replace(/(<([^>]+)>)/gi, ""),
       content: content,
-      userId: data.userId,
     };
 
     const result = await editSejarah(dataSejarah, sejarah.id);

@@ -23,7 +23,7 @@ export default async function page() {
         Halaman untuk melakukan manajemen kontak
       </p>
       <div className="mt-4">
-        <ContentKontak kontak={kontak} userId={session?.user.id} />
+        <ContentKontak kontak={kontak} />
       </div>
     </>
   );

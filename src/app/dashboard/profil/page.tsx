@@ -49,13 +49,13 @@ export default async function page() {
           </TabsList>
         </div>
         <TabsContent value="sejarah">
-          <ContentSejarah userId={session?.user.id} sejarah={sejarah} />
+          <ContentSejarah sejarah={sejarah} />
         </TabsContent>
         <TabsContent value="visi-misi">
-          <ContentVisiMisi userId={session?.user.id} visiMisi={visiMisi} />
+          <ContentVisiMisi visiMisi={visiMisi} />
         </TabsContent>
         <TabsContent value="tentang-himab">
-          <ContentTentangHimab userId={session?.user.id} tentang={tentang} />
+          <ContentTentangHimab tentang={tentang} />
         </TabsContent>
         <TabsContent value="struktur-organisasi">
           <ContentStrukturOrganisasi strukturOrganisasi={strukturOrganisasi} />

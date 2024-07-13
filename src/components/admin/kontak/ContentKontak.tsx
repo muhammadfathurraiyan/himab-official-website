@@ -26,10 +26,8 @@ import { z } from "zod";
 type KontakForm = z.infer<typeof BlogSchema>;
 
 export default function ContentKontak({
-  userId,
   kontak,
 }: {
-  userId?: string;
   kontak: Kontak | null;
 }) {
   if (!kontak) return <></>;
@@ -43,7 +41,6 @@ export default function ContentKontak({
       image: kontak.image,
       content: kontak.content ?? "",
       excerpt: kontak.excerpt ?? "",
-      userId: userId,
     },
   });
 
@@ -53,7 +50,6 @@ export default function ContentKontak({
       image: data.image,
       excerpt: content?.slice(0, 50).replace(/(<([^>]+)>)/gi, ""),
       content: content,
-      userId: data.userId,
     };
 
     const result = await editKontak(dataKontak, kontak.id);
