@@ -39,11 +39,9 @@ import { UserIdContext } from "./ContentKategori";
 type CrudForm = z.infer<typeof KategoriSchema>;
 
 export function CreateKategoriDialog({
-  userId,
   open,
   setOpen,
 }: {
-  userId?: string;
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) {
@@ -51,14 +49,12 @@ export function CreateKategoriDialog({
     resolver: zodResolver(KategoriSchema),
     defaultValues: {
       title: "",
-      userId: userId,
     },
   });
 
   const create = async (data: CrudForm) => {
     const newKategori = {
-      title: data.title,
-      userId: data.userId,
+      title: data.title.toLowerCase(),
     };
 
     const result = await createKategori(newKategori);
@@ -182,14 +178,12 @@ export function EditKategoriDialog({
     resolver: zodResolver(KategoriSchema),
     defaultValues: {
       title: kategori.title,
-      userId: userId,
     },
   });
 
   const edit = async (data: CrudForm) => {
     const newKategori = {
-      title: data.title,
-      userId: data.userId,
+      title: data.title.toLowerCase(),
     };
 
     const result = await editKategori(newKategori, kategori.id);

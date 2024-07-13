@@ -46,7 +46,7 @@ export default function Footer() {
             Raiyan.
           </Link>
         </p>
-        <div className="flex items-center gap-4 max-lg:hidden">
+        <div className="flex items-center gap-4">
           <Link href={"/"} className="hover:text-primary transition-colors">
             <Whatsapp />
           </Link>

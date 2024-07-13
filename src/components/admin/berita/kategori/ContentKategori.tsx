@@ -13,10 +13,8 @@ import { CreateKategoriDialog } from "./CrudKategoriDialog";
 export const UserIdContext = createContext("");
 
 export default function ContentKategori({
-  userId,
   kategori,
 }: {
-  userId?: string;
   kategori: Kategori[];
 }) {
   if (!kategori) return <></>;
@@ -38,24 +36,22 @@ export default function ContentKategori({
         <div className="lg:w-1/2">
           <Card>
             <CardHeader>
-              <UserIdContext.Provider value={userId!}>
-                <DataTable
-                  includes={{
-                    viewOptions: true,
-                    header: {
-                      isVisible: true,
-                      title: "Tabel data kontak",
-                    },
-                  }}
-                  columns={kategoriColumns}
-                  data={kategori}
-                />
-              </UserIdContext.Provider>
+              <DataTable
+                includes={{
+                  viewOptions: true,
+                  header: {
+                    isVisible: true,
+                    title: "Tabel data kontak",
+                  },
+                }}
+                columns={kategoriColumns}
+                data={kategori}
+              />
             </CardHeader>
           </Card>
         </div>
       </div>
-      <CreateKategoriDialog open={isOpen} setOpen={setIsOpen} userId={userId} />
+      <CreateKategoriDialog open={isOpen} setOpen={setIsOpen} />
     </div>
   );
 }

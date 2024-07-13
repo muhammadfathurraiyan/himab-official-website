@@ -66,7 +66,6 @@ export const KategoriSchema = z.object({
     .string()
     .min(1, { message: "Judul harus lebih dari 1 karakter." })
     .max(50, { message: "Judul harus kurang dari 50 karakter." }),
-  userId: z.string().min(1, { message: "Ada kesalahan!." }),
 });
 
 export const BeritaSchema = z.object({

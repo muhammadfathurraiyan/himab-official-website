@@ -29,7 +29,7 @@ export default async function page() {
           />
         </TabsContent>
         <TabsContent value="kategori">
-          <ContentKategori userId={session?.user.id} kategori={kategori} />
+          <ContentKategori kategori={kategori} />
         </TabsContent>
       </Tabs>
     </>

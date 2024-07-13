@@ -248,7 +248,6 @@ export async function createKategori(data: unknown) {
   await prisma.kategori.create({
     data: {
       title: result.data.title,
-      userId: result.data.userId,
     },
   });
 
@@ -268,7 +267,6 @@ export async function editKategori(data: unknown, id: string) {
   await prisma.kategori.update({
     data: {
       title: result.data.title,
-      userId: result.data.userId,
     },
     where: { id: id },
   });
