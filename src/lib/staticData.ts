@@ -5,7 +5,7 @@ export const navLink = [
   },
   {
     name: "Profil",
-    url: "/profil",
+    url: "/profil/tentang-himab",
   },
   {
     name: "Visi-Misi",

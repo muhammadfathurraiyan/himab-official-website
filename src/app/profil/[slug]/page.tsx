@@ -39,5 +39,13 @@ export default async function page({ params }: { params: { slug: string } }) {
         <Viewer content={data.content} />
       </div>
     );
+  } else if (params.slug === "tentang-himab") {
+    const data = await prisma.tentang.findFirst();
+    if (!data) return <></>;
+    return (
+      <div className="editor">
+        <Viewer content={data.content} />
+      </div>
+    );
   }
 }
