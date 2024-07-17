@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import prisma from "./db";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -23,4 +24,8 @@ export function slugify(text: string) {
       .replace(/[^\w-]+/g, " ")
       .replace(/ /g, "-")
   );
+}
+
+export async function getData(category: string) {
+  return await prisma.berita.findMany({ where: { category: category } });
 }

@@ -10,7 +10,6 @@ export default async function LatestNews() {
     take: 6,
   });
 
-  console.log(berita);
   return (
     <section className="px-12 max-lg:px-4 space-y-4">
       <div className="flex lg:items-end lg:gap-4 max-lg:flex-col">

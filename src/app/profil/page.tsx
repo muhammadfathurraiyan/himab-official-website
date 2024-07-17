@@ -15,13 +15,13 @@ export default async function page() {
         <div className="flex lg:items-end lg:gap-4 max-lg:flex-col">
           <h1 className="font-bold text-5xl">Profil HIMAB</h1>
           <p className="text-foreground/70 text-2xl">
-            Halaman profile Himpunan Mahasiswa Aceh Besar
+            Halaman profil Himpunan Mahasiswa Aceh Besar
           </p>
         </div>
         <div className="grid grid-cols-4 max-lg:grid-cols-2 gap-4 min-h-screen">
           <Link
             className="rounded-xl col-span-3 max-lg:col-span-2 group relative"
-            href={`/profile/tentang-himab`}
+            href={`/profil/tentang-himab`}
           >
             <div className="relative size-full rounded-xl overflow-hidden">
               <Image
@@ -38,7 +38,7 @@ export default async function page() {
           </Link>
           <Link
             className="rounded-xl group relative"
-            href={`/profile/visi-misi`}
+            href={`/profil/visi-misi`}
           >
             <div className="relative size-full rounded-xl overflow-hidden">
               <Image
@@ -55,7 +55,7 @@ export default async function page() {
           </Link>
           <Link
             className="rounded-xl group relative"
-            href={`/profile/struktur-organisasi`}
+            href={`/profil/struktur-organisasi`}
           >
             <div className="relative size-full rounded-xl overflow-hidden">
               {/* <Image
@@ -74,7 +74,7 @@ export default async function page() {
           </Link>
           <Link
             className="rounded-xl lg:col-span-2 group relative"
-            href={`/profile/sejarah`}
+            href={`/profil/sejarah`}
           >
             <div className="relative size-full rounded-xl overflow-hidden">
               <Image
@@ -91,7 +91,7 @@ export default async function page() {
           </Link>
           <Link
             className="rounded-xl group relative"
-            href={`/profile/asrama-mahasiswa`}
+            href={`/profil/asrama-mahasiswa`}
           >
             <div className="relative size-full rounded-xl overflow-hidden">
               {/* <Image
