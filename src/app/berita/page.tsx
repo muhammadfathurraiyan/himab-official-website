@@ -5,41 +5,32 @@ import prisma from "@/lib/db";
 import { Berita } from "@prisma/client";
 
 export default async function page() {
-  const category = await prisma.kategori.findMany();
-
-  const categoryToFind: { category: string }[] = [];
-
-  category.forEach((c, i) => {
-    categoryToFind.push({
-      category: c.title,
-    });
-  });
-
+  const categories = await prisma.kategori.findMany();
   const berita = await prisma.berita.findMany({
-    where: {
-      OR: categoryToFind,
+    orderBy: {
+      id: "desc",
     },
-    take: category.length * 4,
+    take: 6,
   });
 
-  const obj: {
-    [key: string]: Berita[];
-  } = {};
-  berita.forEach((b, i) => {
-    if (obj && obj[b.category][0].category !== category[i].title) {
-      obj[category[i].title].push(b);
-    } else {
-      obj[category[i].title] = [b];
+  const obj: { title: string; berita: Berita[] }[] = [];
+
+  for (const c of categories) {
+    const berita = await prisma.berita.findMany({
+      where: { category: c.title },
+      take: 4,
+    });
+
+    if (berita.length > 0) {
+      obj.push({ title: c.title, berita });
     }
-  });
-
-  console.log(obj);
+  }
 
   return (
     <main className="space-y-12">
-      <LatestNews />
-      {berita.map((b) => (
-        <Category berita={berita} title={c.title} />
+      <LatestNews berita={berita} />
+      {obj.map((b, i) => (
+        <Category key={i} berita={b.berita} title={b.title} />
       ))}
     </main>
   );

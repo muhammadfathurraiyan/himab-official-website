@@ -1,22 +1,23 @@
 import prisma from "@/lib/db";
+import { Berita } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function LatestNews() {
-  const berita = await prisma.berita.findMany({
-    orderBy: {
-      id: "desc",
-    },
-    take: 6,
-  });
+export default async function LatestNews({
+  title="Berita Terbaru",
+  desc = "Berita terbaru tentang Himpunan Mahasiswa Aceh Besar",
+  berita,
+}: {
+  title?: string;
+  desc?: string
+  berita: Berita[]
+}) {
 
   return (
     <section className="px-12 max-lg:px-4 space-y-4">
       <div className="flex lg:items-end lg:gap-4 max-lg:flex-col">
-        <h1 className="font-bold text-5xl">Berita Terbaru</h1>
-        <p className="text-foreground/70 text-2xl">
-          Berita terbaru tentang Himpunan Mahasiswa Aceh Besar
-        </p>
+        <h1 className="font-bold text-5xl">{title}</h1>
+        <p className="text-foreground/70 text-2xl">{desc}</p>
       </div>
       <div className="grid grid-cols-6 gap-4">
         <Link

@@ -15,13 +15,13 @@ export default function Category({
 }: {
   title: string;
   berita: Berita[];
-}) {
+}) {  
   return (
     <section className="px-12 max-lg:px-4 space-y-2">
-      <h2 className="font-bold text-3xl">{title}</h2>
-      <div className="grid grid-cols-4 gap-4">
+      <h2 className="font-bold text-3xl capitalize">{title}</h2>
+      <div className="grid grid-cols-4 max-lg:grid-cols-2 gap-4">
         {berita.map((b) => (
-          <Card>
+          <Card key={b.id}>
             <CardHeader className="px-0 pt-0">
               <Image
                 src={b.image}
