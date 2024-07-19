@@ -36,7 +36,7 @@ export default function Category({
               <p>{b.excerpt}</p>
             </CardContent>
             <CardFooter className="px-4">
-              <Link href={`/berita/${b.slug}`} className={buttonVariants()}>
+              <Link href={`/berita/${b.category}/${b.slug}`} className={buttonVariants()}>
                 Selengkapnya!
               </Link>
             </CardFooter>
