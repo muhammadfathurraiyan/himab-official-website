@@ -1,3 +1,4 @@
+"use client";
 import Whatsapp from "@/components/icon/Whatsapp";
 import { Instagram } from "lucide-react";
 import Image from "next/image";
@@ -5,10 +6,18 @@ import Link from "next/link";
 import React from "react";
 import { ThemeToggle } from "../../ThemeToggle";
 import { navLink } from "@/lib/staticData";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
   return (
-    <footer className="mt-12 text-backgroundAbsolute bg-foregroundAbsolute px-12 max-lg:px-4 py-12 space-y-8">
+    <footer
+      className={`${
+        pathname.startsWith("/dashboard") || pathname === "/auth"
+          ? "hidden"
+          : ""
+      } mt-12 text-backgroundAbsolute bg-foregroundAbsolute px-12 max-lg:px-4 py-12 space-y-8`}
+    >
       <div className="flex flex-col gap-4">
         <Link href={"/"} className="flex items-center gap-2">
           <Image

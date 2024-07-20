@@ -103,7 +103,7 @@ export function Navbar({ categories }: { categories: Kategori[] }) {
                 <ListItem
                   key={component.id}
                   title={component.title}
-                  href={slugify(component.title)}
+                  href={`/berita/${component.title}`}
                 >
                   {"Kumpulan informasi terbaru tentang kategori " +
                     component.title}

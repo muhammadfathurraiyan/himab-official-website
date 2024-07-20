@@ -16,7 +16,7 @@ export default async function page({ params }: { params: { slug: string } }) {
             src={berita!.image}
             width={1080}
             height={1080}
-            className="size-full object-cover"
+            className="size-full object-cover rounded-3xl"
           />
         </div>
         <div className="editor">
