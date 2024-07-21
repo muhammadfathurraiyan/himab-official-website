@@ -32,15 +32,24 @@ import {
   deleteStrukturOrganisasi,
   editStriktukrOrganisasi,
 } from "@/lib/actions";
-import { StrukturOrganisasiSchema } from "@/lib/types";
+import { DatabaseSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { StrukturOrganisasi } from "@prisma/client";
+import { Database } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-type CrudForm = z.infer<typeof StrukturOrganisasiSchema>;
+type CrudForm = z.infer<typeof DatabaseSchema>;
 const jabatanStrukturOrganisasi = ["Ketua", "Sektaris", "Anggota"];
+type TSosmed =
+  | (
+      | {
+          jenis?: string | undefined;
+          url?: string | undefined;
+        }
+      | undefined
+    )[]
+  | undefined;
 
 export function CreateStrukturOrganisasi({
   isCreate,
@@ -51,11 +60,21 @@ export function CreateStrukturOrganisasi({
 }) {
   if (!isCreate) return <></>;
   const form = useForm<CrudForm>({
-    resolver: zodResolver(StrukturOrganisasiSchema),
+    resolver: zodResolver(DatabaseSchema),
     defaultValues: {
       name: "",
-      image: "",
       jabatan: "",
+      image: "",
+      divisi: "",
+      status: false,
+      tahunMulai: "",
+      tahunSelesai: "",
+      sosmed: [
+        {
+          jenis: "",
+          url: "",
+        },
+      ],
     },
   });
 
@@ -64,6 +83,11 @@ export function CreateStrukturOrganisasi({
       name: data.name,
       jabatan: data.jabatan,
       image: data.image,
+      divisi: data.divisi,
+      status: data.status,
+      tahunMulai: data.tahunMulai,
+      tahunSelesai: data.tahunSelesai,
+      sosmed: data.sosmed,
     };
 
     const result = await createStrukturOrganisasi(newAnggota);
@@ -173,14 +197,19 @@ export function EditStrukturOrganisasi({
   strukturOrganisasi,
 }: {
   setIsEdit: Dispatch<SetStateAction<boolean>>;
-  strukturOrganisasi: StrukturOrganisasi;
+  strukturOrganisasi: Database;
 }) {
   const form = useForm<CrudForm>({
-    resolver: zodResolver(StrukturOrganisasiSchema),
+    resolver: zodResolver(DatabaseSchema),
     defaultValues: {
       name: strukturOrganisasi.name,
       jabatan: strukturOrganisasi.jabatan,
       image: strukturOrganisasi.image,
+      divisi: strukturOrganisasi.divisi,
+      status: strukturOrganisasi.status,
+      tahunMulai: strukturOrganisasi.tahunMulai,
+      tahunSelesai: strukturOrganisasi.tahunSelesai,
+      sosmed: strukturOrganisasi.sosmed as TSosmed,
     },
   });
 
@@ -189,6 +218,11 @@ export function EditStrukturOrganisasi({
       name: data.name,
       jabatan: data.jabatan,
       image: data.image,
+      divisi: data.divisi,
+      status: data.status,
+      tahunMulai: data.tahunMulai,
+      tahunSelesai: data.tahunSelesai,
+      sosmed: data.sosmed,
     };
 
     const result = await editStriktukrOrganisasi(

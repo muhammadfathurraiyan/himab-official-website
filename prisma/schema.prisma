@@ -65,24 +65,30 @@ model Kontak {
 }
 
 model Kategori {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  title  String
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
 }
 
 model Database {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   tahunMulai   String
   tahunSelesai String
+  divisi       String
   jabatan      String
   image        String
+  status       Boolean
+  sosmed       Json?
 }
 
-model StrukturOrganisasi {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  jabatan String
-  image   String
+model Jabatan {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+}
+
+model Divisi {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
 }
 
 model Asrama {

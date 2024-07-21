@@ -6,7 +6,6 @@ import {
   KategoriSchema,
   BeritaSchema,
   DatabaseSchema,
-  StrukturOrganisasiSchema,
   AsramaMahasiswaSchema,
 } from "./types";
 import prisma from "./db";
@@ -348,8 +347,11 @@ export async function createDatabase(data: unknown) {
       name: result.data.name,
       jabatan: result.data.jabatan,
       image: result.data.image,
+      divisi: result.data.divisi,
+      status: result.data.status,
       tahunMulai: result.data.tahunMulai,
       tahunSelesai: result.data.tahunSelesai,
+      sosmed: result.data.sosmed,
     },
   });
 
@@ -371,8 +373,11 @@ export async function editDatabase(data: unknown, id: string) {
       name: result.data.name,
       jabatan: result.data.jabatan,
       image: result.data.image,
+      divisi: result.data.divisi,
+      status: result.data.status,
       tahunMulai: result.data.tahunMulai,
       tahunSelesai: result.data.tahunSelesai,
+      sosmed: result.data.sosmed,
     },
     where: {
       id: id,
@@ -388,7 +393,7 @@ export const deleteDatabase = async (id: string) => {
 };
 
 export async function createStrukturOrganisasi(data: unknown) {
-  const result = StrukturOrganisasiSchema.safeParse(data);
+  const result = DatabaseSchema.safeParse(data);
   if (!result.success) {
     let errorMessage = "";
     result.error.issues.forEach((issue) => {
@@ -397,11 +402,16 @@ export async function createStrukturOrganisasi(data: unknown) {
     return { error: errorMessage };
   }
 
-  await prisma.strukturOrganisasi.create({
+  await prisma.database.create({
     data: {
       name: result.data.name,
       jabatan: result.data.jabatan,
       image: result.data.image,
+      divisi: result.data.divisi,
+      status: result.data.status,
+      tahunMulai: result.data.tahunMulai,
+      tahunSelesai: result.data.tahunSelesai,
+      sosmed: result.data.sosmed,
     },
   });
 
@@ -409,7 +419,7 @@ export async function createStrukturOrganisasi(data: unknown) {
 }
 
 export async function editStriktukrOrganisasi(data: unknown, id: string) {
-  const result = StrukturOrganisasiSchema.safeParse(data);
+  const result = DatabaseSchema.safeParse(data);
   if (!result.success) {
     let errorMessage = "";
     result.error.issues.forEach((issue) => {
@@ -418,7 +428,7 @@ export async function editStriktukrOrganisasi(data: unknown, id: string) {
     return { error: errorMessage };
   }
 
-  await prisma.strukturOrganisasi.update({
+  await prisma.database.update({
     data: {
       name: result.data.name,
       jabatan: result.data.jabatan,
@@ -433,7 +443,7 @@ export async function editStriktukrOrganisasi(data: unknown, id: string) {
 }
 
 export const deleteStrukturOrganisasi = async (id: string) => {
-  await prisma.strukturOrganisasi.delete({ where: { id: id } });
+  await prisma.database.delete({ where: { id: id } });
   revalidatePath("/dashboard/profil");
 };
 

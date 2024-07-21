@@ -3,14 +3,14 @@ import CardInfo from "@/components/global/adminLayout/card/CardInfo";
 import { strukturOrganisasiColumns } from "@/components/global/adminLayout/table/Columns";
 import { DataTable } from "@/components/global/adminLayout/table/Datatable";
 import { Card, CardHeader } from "@/components/ui/card";
-import { StrukturOrganisasi } from "@prisma/client";
+import { Database } from "@prisma/client";
 import { useState } from "react";
 import { CreateStrukturOrganisasi } from "./CrudStrukturOrganisasi";
 
-export default function ContentStrukturOrganisasi({   
+export default function ContentStrukturOrganisasi({
   strukturOrganisasi,
 }: {
-  strukturOrganisasi: StrukturOrganisasi[];
+  strukturOrganisasi: Database[];
 }) {
   const [isCreate, setIsCreate] = useState(false);
   return (

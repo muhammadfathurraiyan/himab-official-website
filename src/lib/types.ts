@@ -90,17 +90,18 @@ export const DatabaseSchema = z.object({
     .max(50, { message: "Nama terlalu panjang." }),
   image: z.string().min(12, { message: "Link gambar tidak valid." }),
   jabatan: z.string().min(1, { message: "Jabatan harus dipilih." }),
-  tahunMulai: z.string().min(1, { message: "Jabatan harus dipilih." }),
-  tahunSelesai: z.string().min(1, { message: "Jabatan harus dipilih." }),
-});
-
-export const StrukturOrganisasiSchema = z.object({
-  name: z
-    .string()
-    .min(1, { message: "Nama harus lebih dari 1 karakter." })
-    .max(50, { message: "Nama terlalu panjang." }),
-  jabatan: z.string().min(1, { message: "Jabatan harus dipilih." }),
-  image: z.string().min(12, { message: "Link gambar tidak valid." }),
+  divisi: z.string().min(1, { message: "Divisi harus dipilih." }),
+  tahunMulai: z.string().min(1, { message: "Tahun mulai harus dipilih." }),
+  tahunSelesai: z.string().min(1, { message: "Tahun selesai harus dipilih." }),
+  status: z.boolean(),
+  sosmed: z
+    .array(
+      z.object({
+        jenis: z.string().min(1, { message: "Pilih jenis sosmed." }),
+        url: z.string().min(1, { message: "link sosmed harus diisi." }),
+      })
+    )
+    .optional(),
 });
 
 const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
