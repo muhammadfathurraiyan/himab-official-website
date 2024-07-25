@@ -12,7 +12,8 @@ export default async function page() {
   const sejarah = await prisma.sejarah.findFirst();
   const visiMisi = await prisma.visiMisi.findFirst();
   const tentang = await prisma.tentang.findFirst();
-  const strukturOrganisasi = await prisma.strukturOrganisasi.findMany();
+  const strukturOrganisasi = await prisma.database.findMany();
+  const jabatan = await prisma.jabatan.findMany();
   const asrama = await prisma.asrama.findFirst();
 
   // await prisma.asrama.create({
@@ -58,7 +59,7 @@ export default async function page() {
           <ContentTentangHimab tentang={tentang} />
         </TabsContent>
         <TabsContent value="struktur-organisasi">
-          <ContentStrukturOrganisasi strukturOrganisasi={strukturOrganisasi} />
+          <ContentStrukturOrganisasi strukturOrganisasi={strukturOrganisasi} jabatan={jabatan} />
         </TabsContent>
         <TabsContent value="asrama-mahasiswa">
           <ContentAsramaMahasiswa asrama={asrama} />

@@ -343,7 +343,7 @@ export function DeleteStrukturOrganisasi({
       toast({
         title: "Berhasil di hapus",
         description:
-          "Berita berhasil di hapus, silahkan cek pada tabel data berita.",
+          "Data berhasil di hapus, silahkan cek pada tabel data anggota.",
       });
     } else {
       toast({

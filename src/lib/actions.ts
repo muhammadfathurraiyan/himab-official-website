@@ -7,6 +7,7 @@ import {
   BeritaSchema,
   DatabaseSchema,
   AsramaMahasiswaSchema,
+  JabatanSchema,
 } from "./types";
 import prisma from "./db";
 import bcrypt from "bcrypt";
@@ -444,6 +445,52 @@ export async function editStriktukrOrganisasi(data: unknown, id: string) {
 
 export const deleteStrukturOrganisasi = async (id: string) => {
   await prisma.database.delete({ where: { id: id } });
+  revalidatePath("/dashboard/profil");
+};
+
+export async function createJabatan(data: unknown) {
+  const result = JabatanSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.jabatan.create({
+    data: {
+      title: result.data.title,
+    },
+  });
+
+  revalidatePath("/dashboard/profil");
+}
+
+export async function editJabatan(data: unknown, id: string) {
+  const result = JabatanSchema.safeParse(data);
+  if (!result.success) {
+    let errorMessage = "";
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.message;
+    });
+    return { error: errorMessage };
+  }
+
+  await prisma.jabatan.update({
+    data: {
+      title: result.data.title,
+    },
+    where: {
+      id: id,
+    },
+  });
+
+  revalidatePath("/dashboard/profil");
+}
+
+export const deleteJabatan = async (id: string) => {
+  await prisma.jabatan.delete({ where: { id: id } });
   revalidatePath("/dashboard/profil");
 };
 
