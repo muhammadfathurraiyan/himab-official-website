@@ -46,7 +46,11 @@ import { Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useContext, useState } from "react";
 import { DataTableColumnHeader } from "./DatatableColumnHeader";
-import { DeleteJabatan, EditJabatan } from "@/components/admin/profile/struktur-organisasi/CrudJabatan";
+import {
+  DeleteJabatan,
+  EditJabatan,
+} from "@/components/admin/profile/struktur-organisasi/CrudJabatan";
+import { JabatanContext } from "@/components/admin/profile/struktur-organisasi/ContentStrukturOrganisasi";
 
 export const userColumns: ColumnDef<User>[] = [
   {
@@ -717,6 +721,7 @@ export const strukturOrganisasiColumns: ColumnDef<Database>[] = [
       const strukturOrganisasi = row.original;
       const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
       const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+      const context = useContext(JabatanContext);
       return (
         <>
           <Dialog
@@ -749,6 +754,7 @@ export const strukturOrganisasiColumns: ColumnDef<Database>[] = [
               <EditStrukturOrganisasi
                 strukturOrganisasi={strukturOrganisasi}
                 setIsEdit={setIsEditDialogOpen}
+                jabatan={context}
               />
             ) : (
               <DeleteStrukturOrganisasi
@@ -827,10 +833,7 @@ export const jabatanColumn: ColumnDef<Jabatan>[] = [
               </DropdownMenuContent>
             </DropdownMenu>
             {isEditDialogOpen ? (
-              <EditJabatan
-                jabatan={jabatan}
-                setIsEdit={setIsEditDialogOpen}
-              />
+              <EditJabatan jabatan={jabatan} setIsEdit={setIsEditDialogOpen} />
             ) : (
               <DeleteJabatan
                 id={jabatan.id}

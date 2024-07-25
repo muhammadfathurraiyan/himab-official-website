@@ -34,13 +34,12 @@ import {
 } from "@/lib/actions";
 import { DatabaseSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Database } from "@prisma/client";
+import { Database, Jabatan } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 type CrudForm = z.infer<typeof DatabaseSchema>;
-const jabatanStrukturOrganisasi = ["Ketua", "Sektaris", "Anggota"];
 type TSosmed =
   | (
       | {
@@ -54,9 +53,11 @@ type TSosmed =
 export function CreateStrukturOrganisasi({
   isCreate,
   setIsCreate,
+  jabatan
 }: {
   isCreate: boolean;
   setIsCreate: Dispatch<SetStateAction<boolean>>;
+  jabatan: Jabatan[]
 }) {
   if (!isCreate) return <></>;
   const form = useForm<CrudForm>({
@@ -149,9 +150,9 @@ export function CreateStrukturOrganisasi({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {jabatanStrukturOrganisasi.map((jabatan) => (
-                          <SelectItem key={jabatan} value={jabatan}>
-                            {jabatan}
+                        {jabatan.map((j) => (
+                          <SelectItem key={j.id} value={j.title}>
+                            {j.title}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -195,9 +196,11 @@ export function CreateStrukturOrganisasi({
 export function EditStrukturOrganisasi({
   setIsEdit,
   strukturOrganisasi,
+  jabatan
 }: {
   setIsEdit: Dispatch<SetStateAction<boolean>>;
   strukturOrganisasi: Database;
+  jabatan: Jabatan[]
 }) {
   const form = useForm<CrudForm>({
     resolver: zodResolver(DatabaseSchema),
@@ -286,9 +289,9 @@ export function EditStrukturOrganisasi({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {jabatanStrukturOrganisasi.map((jabatan) => (
-                        <SelectItem key={jabatan} value={jabatan}>
-                          {jabatan}
+                      {jabatan.map((j) => (
+                        <SelectItem key={j.id} value={j.title}>
+                          {j.title}
                         </SelectItem>
                       ))}
                     </SelectContent>

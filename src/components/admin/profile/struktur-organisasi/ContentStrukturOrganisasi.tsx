@@ -7,10 +7,12 @@ import {
 import { DataTable } from "@/components/global/adminLayout/table/Datatable";
 import { Card, CardHeader } from "@/components/ui/card";
 import { Database, Jabatan } from "@prisma/client";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import { CreateStrukturOrganisasi } from "./CrudStrukturOrganisasi";
 import { Button } from "@/components/ui/button";
 import { CreateJabatan } from "./CrudJabatan";
+
+export const JabatanContext = createContext<Jabatan[]>([{ id: "", title: "" }]);
 
 export default function ContentStrukturOrganisasi({
   strukturOrganisasi,
@@ -20,6 +22,7 @@ export default function ContentStrukturOrganisasi({
   jabatan: Jabatan[];
 }) {
   const [isCreate, setIsCreate] = useState(false);
+  const [jabatanForEdit, setJabatanForEdit] = useState<Jabatan[]>();
   const [isCreateJabatan, setIsCreateJabatan] = useState(false);
   return (
     <div className="grid lg:grid-cols-3 gap-4">
@@ -31,28 +34,34 @@ export default function ContentStrukturOrganisasi({
         />
         <Card>
           <CardHeader>
-            <DataTable
-              includes={{
-                viewOptions: true,
-                header: {
-                  isVisible: true,
-                  title: "Tabel data anggota organisasi",
-                },
-              }}
-              columns={strukturOrganisasiColumns}
-              data={strukturOrganisasi}
-            />
+            <JabatanContext.Provider value={jabatan}>
+              <DataTable
+                includes={{
+                  viewOptions: true,
+                  header: {
+                    isVisible: true,
+                    title: "Tabel data anggota organisasi",
+                  },
+                }}
+                columns={strukturOrganisasiColumns}
+                data={strukturOrganisasi}
+              />
+            </JabatanContext.Provider>
           </CardHeader>
         </Card>
         <CreateStrukturOrganisasi
           isCreate={isCreate}
           setIsCreate={setIsCreate}
+          jabatan={jabatan}
         />
       </div>
       <div className="flex flex-col gap-4 mt-4">
         <Card>
           <CardHeader>
-            <Button type="button" onClick={() => setIsCreateJabatan(!isCreateJabatan)}>
+            <Button
+              type="button"
+              onClick={() => setIsCreateJabatan(!isCreateJabatan)}
+            >
               Tambah Jabatan
             </Button>
             <DataTable columns={jabatanColumn} data={jabatan} />
