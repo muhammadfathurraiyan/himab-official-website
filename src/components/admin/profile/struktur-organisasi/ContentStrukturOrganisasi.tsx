@@ -25,8 +25,10 @@ export default function ContentStrukturOrganisasi({
   const [jabatanForEdit, setJabatanForEdit] = useState<Jabatan[]>();
   const [isCreateJabatan, setIsCreateJabatan] = useState(false);
   return (
-    <div className="grid lg:grid-cols-3 gap-4">
-      <div className="flex flex-col gap-4 mt-4 lg:col-span-2">
+    <div className={`grid ${isCreate ? "lg:grid-cols-1" : "lg:grid-cols-3"} gap-4`}>
+      <div
+        className={`${isCreate && "hidden"} flex flex-col gap-4 mt-4 lg:col-span-2`}
+      >
         <CardInfo
           description="Jika anda ingin melakukan penambahan anggota organisasi, klik tombol di bawah untuk melakukan penambahan tentang anggota organisasi."
           title="Struktur Organisasi"
@@ -49,13 +51,13 @@ export default function ContentStrukturOrganisasi({
             </JabatanContext.Provider>
           </CardHeader>
         </Card>
-        <CreateStrukturOrganisasi
-          isCreate={isCreate}
-          setIsCreate={setIsCreate}
-          jabatan={jabatan}
-        />
       </div>
-      <div className="flex flex-col gap-4 mt-4">
+      <CreateStrukturOrganisasi
+        isCreate={isCreate}
+        setIsCreate={setIsCreate}
+        jabatan={jabatan}
+      />
+      <div className={`${isCreate && "hidden"} flex flex-col gap-4 mt-4`}>
         <Card>
           <CardHeader>
             <Button

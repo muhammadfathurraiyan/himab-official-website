@@ -77,7 +77,7 @@ model Database {
   divisi       String
   jabatan      String
   image        String
-  status       Boolean
+  status       String
   sosmed       Json?
 }
 

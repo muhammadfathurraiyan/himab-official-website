@@ -2,6 +2,14 @@
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
   Dialog,
   DialogClose,
   DialogContent,
@@ -36,7 +44,7 @@ import { DatabaseSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Database, Jabatan } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 
 type CrudForm = z.infer<typeof DatabaseSchema>;
@@ -53,11 +61,11 @@ type TSosmed =
 export function CreateStrukturOrganisasi({
   isCreate,
   setIsCreate,
-  jabatan
+  jabatan,
 }: {
   isCreate: boolean;
   setIsCreate: Dispatch<SetStateAction<boolean>>;
-  jabatan: Jabatan[]
+  jabatan: Jabatan[];
 }) {
   if (!isCreate) return <></>;
   const form = useForm<CrudForm>({
@@ -67,7 +75,7 @@ export function CreateStrukturOrganisasi({
       jabatan: "",
       image: "",
       divisi: "",
-      status: false,
+      status: "",
       tahunMulai: "",
       tahunSelesai: "",
       sosmed: [
@@ -77,6 +85,12 @@ export function CreateStrukturOrganisasi({
         },
       ],
     },
+  });
+
+  const control = form.control;
+  const formField = useFieldArray({
+    name: "sosmed",
+    control,
   });
 
   const create = async (data: CrudForm) => {
@@ -110,17 +124,15 @@ export function CreateStrukturOrganisasi({
   };
 
   return (
-    <Dialog open={isCreate} onOpenChange={setIsCreate}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Tambah anggota</DialogTitle>
-          <DialogDescription>
-            Form untuk melakukan penambahan anggota organisasi.
-          </DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(create)} className="space-y-4">
-            <div className="space-y-2">
+    <div
+      className={`${
+        isCreate ? "visible opacity-100" : "hidden invisible opacity-0"
+      } transition-all`}
+    >
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(create)} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
               <FormField
                 control={form.control}
                 name="name"
@@ -178,29 +190,176 @@ export function CreateStrukturOrganisasi({
                 )}
               />
             </div>
-            <div className="flex items-center gap-4">
-              <DialogClose className={buttonVariants({ variant: "outline" })}>
-                Batal
-              </DialogClose>
-              <Button className="max-lg:w-full" type="submit">
-                Submit
-              </Button>
+            <div className="flex flex-col gap-2">
+              <FormField
+                control={form.control}
+                name="divisi"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Divisi</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Divisi" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Jabatan</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pilih Kategori" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="menjabat">menjabat</SelectItem>
+                        <SelectItem value="alumni">alumni</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex gap-2 justify-between">
+                <FormField
+                  control={form.control}
+                  name="tahunMulai"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Tahun mulai</FormLabel>
+                      <FormControl>
+                        <Input placeholder="2020" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="tahunSelesai"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Tahun selesai</FormLabel>
+                      <FormControl>
+                        <Input placeholder="2022" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+          </div>
+          <Card className="mt-4">
+            <CardHeader>
+              <CardTitle>Sosial Media</CardTitle>
+              <CardDescription>
+                Silahkan mengisi form dibawah untuk menambahkan sosmed
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {formField.fields.map((field, index) => (
+                <div
+                  key={field.id}
+                  className="border rounded-lg p-4 flex flex-col gap-2"
+                >
+                  <h3 className="text-lg font-semibold">Ruang {index + 1}</h3>
+                  <FormField
+                    control={form.control}
+                    name={`sosmed.${index}.jenis`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nama sosmed</FormLabel>
+                        <FormControl>
+                          <Input
+                            className=""
+                            placeholder="Instagram"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`sosmed.${index}.url`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Link sosmed</FormLabel>
+                        <FormControl>
+                          <Input
+                            className=""
+                            placeholder="https://placehold.co/150x150"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button
+                    type="button"
+                    variant={"destructive"}
+                    className="mt-2 w-fit"
+                    onClick={() => {
+                      formField.remove(index);
+                    }}
+                  >
+                    Hapus
+                  </Button>
+                </div>
+              ))}
+            </CardContent>
+            <CardFooter>
+              <Button
+                type="button"
+                variant={"outline"}
+                onClick={() => {
+                  formField.append({
+                    jenis: "",
+                    url: "",
+                  });
+                }}
+              >
+                Tambah sosmed
+              </Button>
+            </CardFooter>
+          </Card>
+          <div className="flex items-center gap-4">
+            <Button
+              type="button"
+              variant={"outline"}
+              onClick={() => setIsCreate(false)}
+            >
+              Batal
+            </Button>
+            <Button className="max-lg:w-full" type="submit">
+              Submit
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 }
 
 export function EditStrukturOrganisasi({
   setIsEdit,
   strukturOrganisasi,
-  jabatan
+  jabatan,
 }: {
   setIsEdit: Dispatch<SetStateAction<boolean>>;
   strukturOrganisasi: Database;
-  jabatan: Jabatan[]
+  jabatan: Jabatan[];
 }) {
   const form = useForm<CrudForm>({
     resolver: zodResolver(DatabaseSchema),

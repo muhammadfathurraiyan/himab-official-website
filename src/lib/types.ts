@@ -98,9 +98,9 @@ export const DatabaseSchema = z.object({
   image: z.string().min(12, { message: "Link gambar tidak valid." }),
   jabatan: z.string().min(1, { message: "Jabatan harus dipilih." }),
   divisi: z.string().min(1, { message: "Divisi harus dipilih." }),
-  tahunMulai: z.string().min(1, { message: "Tahun mulai harus dipilih." }),
-  tahunSelesai: z.string().min(1, { message: "Tahun selesai harus dipilih." }),
-  status: z.boolean(),
+  tahunMulai: z.string().min(1, { message: "Tahun mulai harus di isi." }),
+  tahunSelesai: z.string().min(1, { message: "Tahun selesai harus di isi." }),
+  status: z.string().min(1, { message: "Status harus dipilih." }),
   sosmed: z
     .array(
       z.object({
