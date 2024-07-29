@@ -719,16 +719,17 @@ export const strukturOrganisasiColumns: ColumnDef<Database>[] = [
     id: "actions",
     cell: ({ row }) => {
       const strukturOrganisasi = row.original;
-      const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
       const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
       const context = useContext(JabatanContext);
+      const handleEdit = () => {
+        context?.setIsEdit(true);
+        context?.setStruktur!(strukturOrganisasi);
+      };
       return (
         <>
           <Dialog
-            open={isEditDialogOpen || isDeleteDialogOpen}
-            onOpenChange={
-              isEditDialogOpen ? setIsEditDialogOpen : setIsDeleteDialogOpen
-            }
+            open={isDeleteDialogOpen}
+            onOpenChange={setIsDeleteDialogOpen}
           >
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -744,24 +745,16 @@ export const strukturOrganisasiColumns: ColumnDef<Database>[] = [
                   <Trash2 className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
                   Hapus
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setIsEditDialogOpen(true)}>
+                <DropdownMenuItem onClick={handleEdit}>
                   <Pencil className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
                   Edit
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            {isEditDialogOpen ? (
-              <EditStrukturOrganisasi
-                strukturOrganisasi={strukturOrganisasi}
-                setIsEdit={setIsEditDialogOpen}
-                jabatan={context}
-              />
-            ) : (
-              <DeleteStrukturOrganisasi
-                id={strukturOrganisasi.id}
-                setIsDelete={setIsDeleteDialogOpen}
-              />
-            )}
+            <DeleteStrukturOrganisasi
+              id={strukturOrganisasi.id}
+              setIsDelete={setIsDeleteDialogOpen}
+            />
           </Dialog>
         </>
       );

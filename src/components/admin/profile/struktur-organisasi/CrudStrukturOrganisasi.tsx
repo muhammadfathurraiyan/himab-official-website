@@ -74,7 +74,6 @@ export function CreateStrukturOrganisasi({
       name: "",
       jabatan: "",
       image: "",
-      divisi: "",
       status: "",
       tahunMulai: "",
       tahunSelesai: "",
@@ -98,7 +97,6 @@ export function CreateStrukturOrganisasi({
       name: data.name,
       jabatan: data.jabatan,
       image: data.image,
-      divisi: data.divisi,
       status: data.status,
       tahunMulai: data.tahunMulai,
       tahunSelesai: data.tahunSelesai,
@@ -191,19 +189,6 @@ export function CreateStrukturOrganisasi({
               />
             </div>
             <div className="flex flex-col gap-2">
-              <FormField
-                control={form.control}
-                name="divisi"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Divisi</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Divisi" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <FormField
                 control={form.control}
                 name="status"
@@ -354,20 +339,22 @@ export function CreateStrukturOrganisasi({
 
 export function EditStrukturOrganisasi({
   setIsEdit,
+  isEdit,
   strukturOrganisasi,
   jabatan,
 }: {
   setIsEdit: Dispatch<SetStateAction<boolean>>;
-  strukturOrganisasi: Database;
+  isEdit: boolean;
+  strukturOrganisasi?: Database;
   jabatan: Jabatan[];
 }) {
+  if (!strukturOrganisasi) return <></>;
   const form = useForm<CrudForm>({
     resolver: zodResolver(DatabaseSchema),
     defaultValues: {
       name: strukturOrganisasi.name,
       jabatan: strukturOrganisasi.jabatan,
       image: strukturOrganisasi.image,
-      divisi: strukturOrganisasi.divisi,
       status: strukturOrganisasi.status,
       tahunMulai: strukturOrganisasi.tahunMulai,
       tahunSelesai: strukturOrganisasi.tahunSelesai,
@@ -375,12 +362,17 @@ export function EditStrukturOrganisasi({
     },
   });
 
+  const control = form.control;
+  const formField = useFieldArray({
+    name: "sosmed",
+    control,
+  });
+
   const edit = async (data: CrudForm) => {
     const updatedData = {
       name: data.name,
       jabatan: data.jabatan,
       image: data.image,
-      divisi: data.divisi,
       status: data.status,
       tahunMulai: data.tahunMulai,
       tahunSelesai: data.tahunSelesai,
@@ -409,84 +401,218 @@ export function EditStrukturOrganisasi({
   };
 
   return (
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Edit anggota</DialogTitle>
-        <DialogDescription>
-          Form untuk melakukan edit data anggota organisasi.
-        </DialogDescription>
-      </DialogHeader>
+    <div
+      className={`${
+        isEdit ? "visible opacity-100" : "hidden invisible opacity-0"
+      } transition-all`}
+    >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(edit)} className="space-y-4">
-          <div className="space-y-2">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nama</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Sabirin" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="jabatan"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Jabatan</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nama</FormLabel>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Pilih Kategori" />
-                      </SelectTrigger>
+                      <Input placeholder="Sabirin" {...field} />
                     </FormControl>
-                    <SelectContent>
-                      {jabatan.map((j) => (
-                        <SelectItem key={j.id} value={j.title}>
-                          {j.title}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Link gambar profil</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="https://placehold.co/150x150"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="jabatan"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Jabatan</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pilih Kategori" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {jabatan.map((j) => (
+                          <SelectItem key={j.id} value={j.title}>
+                            {j.title}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Link gambar profil</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="https://placehold.co/150x150"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <FormField
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Status</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pilih Kategori" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="menjabat">menjabat</SelectItem>
+                        <SelectItem value="alumni">alumni</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex gap-2 justify-between">
+                <FormField
+                  control={form.control}
+                  name="tahunMulai"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Tahun mulai</FormLabel>
+                      <FormControl>
+                        <Input placeholder="2020" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="tahunSelesai"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Tahun selesai</FormLabel>
+                      <FormControl>
+                        <Input placeholder="2022" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
           </div>
+          <Card className="mt-4">
+            <CardHeader>
+              <CardTitle>Sosial Media</CardTitle>
+              <CardDescription>
+                Silahkan mengisi form dibawah untuk menambahkan sosmed
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {formField.fields.map((field, index) => (
+                <div
+                  key={field.id}
+                  className="border rounded-lg p-4 flex flex-col gap-2"
+                >
+                  <h3 className="text-lg font-semibold">Ruang {index + 1}</h3>
+                  <FormField
+                    control={form.control}
+                    name={`sosmed.${index}.jenis`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nama sosmed</FormLabel>
+                        <FormControl>
+                          <Input
+                            className=""
+                            placeholder="Instagram"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`sosmed.${index}.url`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Link sosmed</FormLabel>
+                        <FormControl>
+                          <Input
+                            className=""
+                            placeholder="https://placehold.co/150x150"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button
+                    type="button"
+                    variant={"destructive"}
+                    className="mt-2 w-fit"
+                    onClick={() => {
+                      formField.remove(index);
+                    }}
+                  >
+                    Hapus
+                  </Button>
+                </div>
+              ))}
+            </CardContent>
+            <CardFooter>
+              <Button
+                type="button"
+                variant={"outline"}
+                onClick={() => {
+                  formField.append({
+                    jenis: "",
+                    url: "",
+                  });
+                }}
+              >
+                Tambah sosmed
+              </Button>
+            </CardFooter>
+          </Card>
           <div className="flex items-center gap-4">
-            <DialogClose className={buttonVariants({ variant: "outline" })}>
+            <Button
+              type="button"
+              variant={"outline"}
+              onClick={() => setIsEdit(false)}
+            >
               Batal
-            </DialogClose>
+            </Button>
             <Button className="max-lg:w-full" type="submit">
-              Update
+              Submit
             </Button>
           </div>
         </form>
       </Form>
-    </DialogContent>
+    </div>
   );
 }
 

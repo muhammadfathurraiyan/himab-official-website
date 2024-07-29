@@ -7,12 +7,19 @@ import {
 import { DataTable } from "@/components/global/adminLayout/table/Datatable";
 import { Card, CardHeader } from "@/components/ui/card";
 import { Database, Jabatan } from "@prisma/client";
-import { createContext, useState } from "react";
-import { CreateStrukturOrganisasi } from "./CrudStrukturOrganisasi";
+import { createContext, Dispatch, SetStateAction, useState } from "react";
+import {
+  CreateStrukturOrganisasi,
+  EditStrukturOrganisasi,
+} from "./CrudStrukturOrganisasi";
 import { Button } from "@/components/ui/button";
 import { CreateJabatan } from "./CrudJabatan";
 
-export const JabatanContext = createContext<Jabatan[]>([{ id: "", title: "" }]);
+type TStrukturOrganisasiContext = {
+  setStruktur?: Dispatch<SetStateAction<Database | undefined>>;
+  setIsEdit: Dispatch<SetStateAction<boolean>>;
+} | null;
+export const JabatanContext = createContext<TStrukturOrganisasiContext>(null);
 
 export default function ContentStrukturOrganisasi({
   strukturOrganisasi,
@@ -22,12 +29,19 @@ export default function ContentStrukturOrganisasi({
   jabatan: Jabatan[];
 }) {
   const [isCreate, setIsCreate] = useState(false);
-  const [jabatanForEdit, setJabatanForEdit] = useState<Jabatan[]>();
+  const [isEdit, setIsEdit] = useState(false);
+  const [struktur, setStruktur] = useState<Database>();
   const [isCreateJabatan, setIsCreateJabatan] = useState(false);
   return (
-    <div className={`grid ${isCreate ? "lg:grid-cols-1" : "lg:grid-cols-3"} gap-4`}>
+    <div
+      className={`grid ${
+        isCreate || isEdit ? "lg:grid-cols-1" : "lg:grid-cols-3"
+      } gap-4`}
+    >
       <div
-        className={`${isCreate && "hidden"} flex flex-col gap-4 mt-4 lg:col-span-2`}
+        className={`${
+          isCreate || isEdit ? "hidden" : ""
+        } flex flex-col gap-4 mt-4 lg:col-span-2`}
       >
         <CardInfo
           description="Jika anda ingin melakukan penambahan anggota organisasi, klik tombol di bawah untuk melakukan penambahan tentang anggota organisasi."
@@ -36,7 +50,9 @@ export default function ContentStrukturOrganisasi({
         />
         <Card>
           <CardHeader>
-            <JabatanContext.Provider value={jabatan}>
+            <JabatanContext.Provider
+              value={{ setStruktur: setStruktur, setIsEdit: setIsEdit }}
+            >
               <DataTable
                 includes={{
                   viewOptions: true,
@@ -57,7 +73,17 @@ export default function ContentStrukturOrganisasi({
         setIsCreate={setIsCreate}
         jabatan={jabatan}
       />
-      <div className={`${isCreate && "hidden"} flex flex-col gap-4 mt-4`}>
+      <EditStrukturOrganisasi
+        strukturOrganisasi={struktur!}
+        setIsEdit={setIsEdit}
+        isEdit={isEdit}
+        jabatan={jabatan}
+      />
+      <div
+        className={`${
+          isCreate || isEdit ? "hidden" : ""
+        } flex flex-col gap-4 mt-4`}
+      >
         <Card>
           <CardHeader>
             <Button

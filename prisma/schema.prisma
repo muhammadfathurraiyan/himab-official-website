@@ -74,7 +74,6 @@ model Database {
   name         String
   tahunMulai   String
   tahunSelesai String
-  divisi       String
   jabatan      String
   image        String
   status       String
@@ -82,11 +81,6 @@ model Database {
 }
 
 model Jabatan {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-}
-
-model Divisi {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   title String
 }
