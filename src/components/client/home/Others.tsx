@@ -1,4 +1,5 @@
 import { buttonVariants } from "@/components/ui/button";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -12,7 +13,15 @@ export default function Others() {
             <p className="font-semibold text-5xl">01</p>
           </div>
           <div className="grid lg:grid-cols-2 gap-8">
-            <div className="bg-green-500 rounded-3xl h-[60vh]">1</div>
+            <div className="rounded-3xl h-[60vh]">
+              <Image
+                src="/img/orang.jpg"
+                alt="database himab"
+                width={1080}
+                height={1080}
+                className="size-full object-cover rounded-3xl"
+              />
+            </div>
             <div className="flex flex-col justify-between gap-4">
               <div className="flex flex-col items-center gap-4  max-lg:gap-2">
                 <h2 className="text-5xl font-bold">
@@ -67,7 +76,15 @@ export default function Others() {
                 Selengkapnya!
               </Link>
             </div>
-            <div className="bg-red-500 rounded-3xl h-[60vh] max-lg:-order-1">1</div>
+            <div className="rounded-3xl h-[60vh] max-lg:-order-1">
+              <Image
+                src="/img/sekret.jpg"
+                alt="asrama himab"
+                width={1080}
+                height={1080}
+                className="size-full object-cover rounded-3xl"
+              />
+            </div>
           </div>
         </div>
       </div>
