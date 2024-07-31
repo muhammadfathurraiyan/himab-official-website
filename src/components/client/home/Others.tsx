@@ -24,7 +24,7 @@ export default function Others() {
             </div>
             <div className="flex flex-col justify-between gap-4">
               <div className="flex flex-col items-center gap-4  max-lg:gap-2">
-                <h2 className="text-5xl font-bold">
+                <h2 className="text-5xl font-bold max-lg:text-4xl">
                   Database Himpunan Mahasiswa Aceh Besar
                 </h2>
                 <p className="text-foreground/70 text-lg line-clamp-3">
@@ -55,7 +55,7 @@ export default function Others() {
           <div className="grid lg:grid-cols-2 gap-4">
             <div className="flex flex-col justify-between gap-4">
               <div className="flex flex-col items-center gap-4 max-lg:gap-2">
-                <h2 className="text-5xl font-bold">
+                <h2 className="text-5xl font-bold max-lg:text-4xl">
                   Asrama Mahasiswa Himpunan Mahasiswa Aceh Besar
                 </h2>
                 <p className="text-foreground/70 text-lg line-clamp-3">

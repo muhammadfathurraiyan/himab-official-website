@@ -14,8 +14,8 @@ export default function Layanan() {
         className="size-full object-cover rounded-3xl absolute top-0 left-0 -z-10"
       />
       <div className="bg-foregroundAbsolute/40 size-full px-12 max-lg:px-4 flex items-center justify-end rounded-3xl">
-        <div className="w-3/4 space-y-4">
-          <h1 className="font-bold text-5xl text-backgroundAbsolute">
+        <div className="lg:w-3/4 space-y-4">
+          <h1 className="font-bold text-5xl max-lg:text-4xl text-backgroundAbsolute">
             Untuk informasi layanan pengaduan, silahkan klik tombol dibawah.
           </h1>
           <Link

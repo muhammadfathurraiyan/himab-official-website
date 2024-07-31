@@ -16,8 +16,8 @@ export default async function LatestNews({
   return (
     <section className="px-12 max-lg:px-4 space-y-4">
       <div className="flex lg:items-end lg:gap-4 max-lg:flex-col">
-        <h1 className="font-bold text-5xl">{title}</h1>
-        <p className="text-foreground/70 text-2xl">{desc}</p>
+        <h1 className="font-bold text-5xl max-lg:text-4xl">{title}</h1>
+        <p className="text-foreground/70 text-2xl max-lg:text-xl">{desc}</p>
       </div>
       <div className="grid grid-cols-6 gap-4">
         <Link
